@@ -790,8 +790,10 @@ async def rename(client: Client, message: Message):
 	msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
 	lista = message.text.split(" ")
 	name1 = int(lista[1])
-	name2 = message.text.replace("/mkdir "+str(name1),"").strip()
+	mssg = message.text
+	name2 = mssg.replace("/mkdir "+lista[1],'').strip()
 	actual = str(ROOT[username]["actual_root"]+"/")+msgh[1][name1]
+	await send(actual+"\n\n"+name2)
 	
 	if not "." in actual:
 		if not "." in name2 and not "/" in name2: pass
@@ -904,7 +906,7 @@ async def seven(client: Client, message: Message):
 
 	if len(lista) == 2:
 		if username not in USER['VIP'] and username not in BOSS:
-			await send("Comprimir carpetas esta desactivado para usted :/ stop con el abuso.")
+			await send("Comprimir esta desactivado (solo puede picar) para usted :/ stop con el abuso.")
 			return
 		else:pass
 		i = int(lista[1])
@@ -1429,7 +1431,7 @@ async def up_revistas_api(file,usid,msg,username):
 ]
 					for _ in range(5):
 						for frame in frames:
-							asyncio.sleep(0.8)
+							asyncio.sleep(1)
 							await msg.edit(frame)
 							
 					print(22)
