@@ -791,9 +791,8 @@ async def rename(client: Client, message: Message):
 	lista = message.text.split(" ")
 	name1 = int(lista[1])
 	mssg = message.text
-	name2 = mssg.replace("/mkdir "+lista[1],'').strip()
+	name2 = mssg.replace("/rn "+lista[1],'').strip()
 	actual = str(ROOT[username]["actual_root"]+"/")+msgh[1][name1]
-	await send(actual+"\n\n"+name2)
 	
 	if not "." in actual:
 		if not "." in name2 and not "/" in name2: pass
@@ -1431,7 +1430,7 @@ async def up_revistas_api(file,usid,msg,username):
 ]
 					for _ in range(5):
 						for frame in frames:
-							asyncio.sleep(1)
+							sleep(0.3)
 							await msg.edit(frame)
 							
 					print(22)
