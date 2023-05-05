@@ -695,7 +695,7 @@ async def ban(client: Client, message: Message):
 	if username in BOSS:
 		msg = message.text.split(" ")
 		if len(msg) == 3:
-			user = message.text.split(" ")[1]
+			user = msg[1]
 			user = user.replace("@","").strip()
 			if user not in USER:
 				await send(f'@{user} no tiene VIP !')
@@ -706,7 +706,7 @@ async def ban(client: Client, message: Message):
 				await send_config()
 				return
 		else:pass
-		user = message.text.split(" ")[1]
+		user = msg[1]
 		user = user.replace("@","").strip()
 		if user not in USER:
 			await send(f"@{user} no posee contrato!!!")
@@ -1313,7 +1313,7 @@ async def up(client: Client, message: Message):
 	   	return
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
-	   await bot.pin_chat_message(message.chat.id,message_id=msg.message_id, disable_notification=True,both_sides=True)
+	   await client.pin_chat_message(user_id,msg.message_id, disable_notification=True,both_sides=True)
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   if USER[username]['host'] == 'educa':
