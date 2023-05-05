@@ -443,7 +443,7 @@ async def status_users(client:Client, message:Message):
 	up = 0
 	down = 0
 	info = ""
-	msg = "**༒ Ɨ₦₣ØɌⲘ₳€ƗØ₦ ₮Ø₮₳Ⱡ ༒**\n"
+	msg = "**✦✧ ༒ Ɨ₦₣ØɌⲘ₳€ƗØ₦ ₮Ø₮₳Ⱡ ༒ ✧✦**\n"
 	for i in USER:
 		if i == 'modo':continue
 		if i == 'VIP':continue
@@ -1313,7 +1313,7 @@ async def up(client: Client, message: Message):
 	   	return
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
-	   await client.pin_chat_message(user_id,msg.id, disable_notification=True,both_sides=True)
+	   
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   if USER[username]['host'] == 'educa':
@@ -1462,6 +1462,7 @@ async def up_revistas_api(file,usid,msg,username):
 							parts = math.ceil(filesize / zipssize)
 							await msg.edit(f"┏━━━━• **❅Preparando❅** •━━━━┓\n🧩 𝕋𝕠𝕥𝕒𝕝: **{parts} partes** a 丂凵乃丨尺\n┗━━━━•**❅🔩{USER[username]['zips']}MiB🔩❅**•━━━━┛")
 							files = await sevenzip(file,volume=zipssize)
+							await bot.pin_chat_message(usid,msg.id, disable_notification=True,both_sides=True)
 							print(24)
 							subido = 0
 							numero = 0
