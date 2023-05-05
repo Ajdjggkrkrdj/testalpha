@@ -434,6 +434,31 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await send_config()
 		await msg.edit("✓ **EDUCA** 𝕮𝖔𝖓𝖋𝖎𝖌𝖚𝖗𝖆𝖉𝖆 𝖈𝖔𝖓 𝖊́𝖝𝖎𝖙𝖔 ✓")
 		await callback_query.answer()"""
+@bot.on_message(filters.command("users", prefixes="/"))
+async def status_users(client:Client, message:Message):
+	user = message.from_user.username
+	if user != 'dev_sorcerer':
+				return
+	else:pass
+	up = 0
+	down = 0
+	info = ""
+	msg = "**༒ Ɨ₦₣ØɌⲘ₳€ƗØ₦ ₮Ø₮₳Ⱡ ༒**\n"
+	for i in USER:
+		if i == 'modo':continue
+		if i == 'VIP':continue
+		if i == 'APYE':continue
+		if i == 'EDIC':continue
+		if i == 'CINFO':continue
+		S = sizeof_fmt(USER[i]['S'])
+		D = sizeof_fmt(USER[i]['D'])
+		up += USER[i]['S']
+		down += USER[i]['D']
+		info += f"Ʉ$Ʉ₳ɌƗØ: **@{i}**\n𝔻𝕖𝕤𝕔𝕒𝕣𝕘𝕒𝕕𝕠: **{D}**\n𝕊𝕦𝕓𝕚𝕕𝕠: **{S}**\n\n"
+	users = str(len(USER)-5)
+	msg +=f"🅤🅢🅐🅤🅡🅘🅞🅢: **{users}**\n🅄🄿🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(up)}**\n🄳🄾🅆🄽🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(down)}**\n\n"
+	await message.reply(msg+info)
+	
 	
 @bot.on_message(filters.command("status", prefixes="/"))
 async def status(client:Client, message:Message):
@@ -1288,7 +1313,7 @@ async def up(client: Client, message: Message):
 	   	return
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
-	   await bot.pin_chat_message(username,message_id=msg.message_id, disable_notification=True,both_sides=True)
+	   await bot.pin_chat_message(message.chat.id,message_id=msg.message_id, disable_notification=True,both_sides=True)
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   if USER[username]['host'] == 'educa':
