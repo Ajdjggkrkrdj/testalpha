@@ -1288,7 +1288,7 @@ async def up(client: Client, message: Message):
 	   	return
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
-	   await msg.pin()
+	   await bot.pin_chat_message(username,msg, disable_notification=True)
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   if USER[username]['host'] == 'educa':
