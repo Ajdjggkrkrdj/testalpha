@@ -1306,7 +1306,8 @@ async def down_link(client: Client, message: Message):
             except Exception as ex:
              	task[username] = False
              	await msg.edit(f"ERROR\n{ex}")
-#Comamdo /up subida a la rev
+             	
+#Comamdo /up subida
 @bot.on_message(filters.regex("/up") & filters.private)
 async def up(client: Client, message: Message):
 	username = message.from_user.username
@@ -1316,7 +1317,7 @@ async def up(client: Client, message: Message):
 	else:pass
 	if username not in BOSS and USER['modo'] != 'on':
 		return
-	list = int(message.text.replace("_", " ").split()[1])
+	
 	if task[username] == True:
 	   	await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸",quote=True)
 	   	return
@@ -1332,7 +1333,7 @@ async def up(client: Client, message: Message):
 	   		path = str(ROOT[username]["actual_root"]+"/")+msgh[1][i]
 	   		await up_revistas_api(path,user_id,msg,username)
 	   	return
-	   	
+	   list = int(message.text.replace("_", " ").split()[1])	
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   if USER[username]['host'] == 'educa':
 	   	await message.reply("**EDUCA** __se encuentra en mantenimiento, notifique si no es asi!__")
