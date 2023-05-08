@@ -72,7 +72,7 @@ CHANNEL = -1001555187910
 bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : 'cLiente101*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
 ROOT = {}
@@ -139,7 +139,7 @@ async def carga_tg(client: Client, message: Message):
 		return
 	else:pass
 	g = get_folder_size(f'downloads/{username}')
-	if g >= 3294967296:
+	if g >= 3294967296 and username not in BOSS:
 		await send("𝕊𝕠𝕣𝕣𝕪, 𝖓𝖔 𝖕𝖚𝖉𝖊 𝖘𝖊𝖌𝖚𝖎𝖗 𝖌𝖚𝖆𝖗𝖉𝖆𝖓𝖉𝖔 𝖊𝖓 𝖊𝖑 𝖗𝖔𝖔𝖙...𝖕𝖆𝖗𝖆 𝖈𝖔𝖓𝖙𝖎𝖓𝖚𝖆𝖗 𝖑𝖎𝖒𝖕𝖎𝖊: \n**⟨⟨/all⟩⟩**")
 		return
 	ms = await send("𝕆𝕓𝕥𝕖𝕟𝕚𝕖𝕟𝕕𝕠 𝕀𝕟𝕗𝕠𝕣𝕞𝕒𝕔𝕚𝕠́𝕟...",reply_markup=ReplyKeyboardRemove())
@@ -152,12 +152,20 @@ async def carga_tg(client: Client, message: Message):
 	task[username] = True
 	for i in downlist[username]:
 		filesize = int(str(i).split('"file_size":')[1].split(",")[0])
-
-		#total_up[username]['P']+=filesize
-		try:
-			filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")	
-		except:
-			filename = str(randint(11111,999999))+".mp4"
+		if i.video:
+			if i.caption:
+				filename = i.caption.split("\n")[0]+'mp4'
+			else:
+				try:
+					filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")	
+				except:
+					filename = "Unknown!!!"+str(randint(00,99))+".mp4"
+		else:
+			try:
+				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")	
+			except:
+				filename = "Unknown!!!"+str(randint(00,99))+".mp4"
+		
 		await bot.send_message(Channel_Id,f'**@{username} Envio un #archivo:**\n**Filename:** {filename}\n**Size:** {sizeof_fmt(filesize)}')	
 		start = time()		
 		await msg.edit(f"**ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕔𝕒𝕣𝕘𝕒...**\n`{filename}`")
@@ -247,7 +255,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		id = USER['APYE']['1']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clienteuno'
-		USER[username]['passw'] = 'cLiente101*'
+		USER[username]['passw'] = '1cLiente01*'
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 1 ✓")
 		await callback_query.answer()
@@ -255,7 +263,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		id = USER['APYE']['2']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientedos'
-		USER[username]['passw'] = 'cLiente202*'
+		USER[username]['passw'] = '2cLiente02*'
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 2 ✓")
 		await callback_query.answer()
@@ -450,12 +458,13 @@ async def status_users(client:Client, message:Message):
 		if i == 'APYE':continue
 		if i == 'EDIC':continue
 		if i == 'CINFO':continue
+		if i == 'dev_sorcerer':continue
 		S = sizeof_fmt(USER[i]['S'])
 		D = sizeof_fmt(USER[i]['D'])
 		up += USER[i]['S']
 		down += USER[i]['D']
 		info += f"Ʉ$Ʉ₳ɌƗØ: **@{i}**\n𝔻𝕖𝕤𝕔𝕒𝕣𝕘𝕒𝕕𝕠: **{D}**\n𝕊𝕦𝕓𝕚𝕕𝕠: **{S}**\n\n"
-	users = str(len(USER)-5)
+	users = str(len(USER)-6)
 	msg +=f"🅤🅢🅐🅤🅡🅘🅞🅢: **{users}**\n🅄🄿🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(up)}**\n🄳🄾🅆🄽🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(down)}**\n\n"
 	await message.reply(msg+info)
 	
@@ -1047,7 +1056,7 @@ async def cmd_mkdir(client: Client, message: Message):
 	if "." in name or "/" in name or "*" in name:
 		await send("🚫 𝕷𝖆 𝖈𝖆𝖗𝖕𝖊𝖙𝖆 𝖓𝖔 𝖕𝖚𝖊𝖉𝖊 𝖈𝖔𝖓𝖙𝖊𝖓𝖊𝖗 * / . ,")
 		return
-	if len(name)>13:
+	if len(name)>15:
 		await send("**Nombre de la carpeta demasiado largo XD**")
 		return
 	else:pass
@@ -1442,7 +1451,7 @@ async def up_revistas_api(file,usid,msg,username):
 					u = resp.url
 				except:
 					u = resp.url()
-				if u==url:
+				if u==host+'login/signIn':
 					await msg.edit("❌ **ERROR** ❌\nℂ𝕣𝕖𝕕𝕖𝕟𝕔𝕚𝕒𝕝𝕖𝕤 𝕚𝕟𝕔𝕠𝕣𝕣𝕖𝕔𝕥𝕒𝕤, 𝕡𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕥𝕒𝕞𝕓𝕚𝕖́𝕟 𝕒𝕝𝕘𝕦𝕟𝕒 𝕔𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟...𝕠 𝕝𝕒 𝕟𝕦𝕓𝕖 𝕖𝕤𝕥𝕒́ 𝕔𝕒𝕚́𝕕𝕒/𝕓𝕒𝕟𝕟𝕖𝕒𝕕𝕒. 😐")
 					task[username]=False
 				else:
@@ -1461,7 +1470,8 @@ async def up_revistas_api(file,usid,msg,username):
 						if filesize-1048>zipssize:
 							parts = math.ceil(filesize / zipssize)
 							await msg.edit(f"┏━━━━• **❅Preparando❅** •━━━━┓\n🧩 𝕋𝕠𝕥𝕒𝕝: **{parts} partes** a 丂凵乃丨尺\n┗━━━━•**❅🔩{USER[username]['zips']}MiB🔩❅**•━━━━┛")
-							files = await sevenzip(file,volume=zipssize)
+							files = asyncio.create_task(sevenzip(file,volume=zipssize))
+							await files
 							await bot.pin_chat_message(usid,msg.id, disable_notification=True,both_sides=True)
 							print(24)
 							subido = 0
@@ -1492,7 +1502,7 @@ async def up_revistas_api(file,usid,msg,username):
 									pass
 							await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")							
 							await bot.send_message(usid,f"💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️")
-							txtname = file.split('.7z')[0].replace(' ','-')+'.txt'								
+							txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
 							with open(txtname,"w") as t:
 								message = ""
 								for li in links:
@@ -1562,5 +1572,5 @@ async def limite_msg(text,username):
 		if len(text) == c and msg_ult != msg:
 			await bot.send_message(username,msg)
 
-print("Iniciado!")
+print("Vergobina iniciada :D")
 bot.run()
