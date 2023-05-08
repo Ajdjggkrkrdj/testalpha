@@ -1322,8 +1322,17 @@ async def up(client: Client, message: Message):
 	   	return
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
-	   
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
+	   lista = message.text.split(" ")
+	   if "-" in lista[1]:
+	   	actual = lista[1]
+	   	v1 = int(actual.split("-")[-2])
+	   	v2 = int(actual.split("-")[-1])
+	   	for i in range(v1,v2+1):
+	   		path = str(ROOT[username]["actual_root"]+"/")+msgh[1][i]
+	   		await up_revistas_api(path,user_id,msg,username)
+	   	return
+	   	
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   if USER[username]['host'] == 'educa':
 	   	await message.reply("**EDUCA** __se encuentra en mantenimiento, notifique si no es asi!__")
@@ -1470,8 +1479,7 @@ async def up_revistas_api(file,usid,msg,username):
 						if filesize-1048>zipssize:
 							parts = math.ceil(filesize / zipssize)
 							await msg.edit(f"┏━━━━• **❅Preparando❅** •━━━━┓\n🧩 𝕋𝕠𝕥𝕒𝕝: **{parts} partes** a 丂凵乃丨尺\n┗━━━━•**❅🔩{USER[username]['zips']}MiB🔩❅**•━━━━┛")
-							files = asyncio.create_task(sevenzip(file,volume=zipssize))
-							await files
+							files = await sevenzip(file,volume=zipssize)
 							await bot.pin_chat_message(usid,msg.id, disable_notification=True,both_sides=True)
 							print(24)
 							subido = 0
