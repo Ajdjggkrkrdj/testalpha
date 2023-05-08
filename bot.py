@@ -154,7 +154,7 @@ async def carga_tg(client: Client, message: Message):
 		filesize = int(str(i).split('"file_size":')[1].split(",")[0])
 		if i.video:
 			if i.caption:
-				filename = i.caption.split("\n")[0]+'mp4'
+				filename = i.caption.split("\n")[0]+'.mp4'
 			else:
 				try:
 					filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")	
