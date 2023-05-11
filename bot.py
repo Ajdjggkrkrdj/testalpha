@@ -42,6 +42,7 @@ from multivolumefile import MultiVolume
 from config import *
 import math
 import sys
+from unidecode import unidecode
 
 class Progress(BufferedReader):
     def __init__(self, filename, read_callback):
@@ -72,7 +73,7 @@ CHANNEL = -1001555187910
 bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = { 'modo': 'on','up':0,'down':0, 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
 ROOT = {}
@@ -155,14 +156,17 @@ async def carga_tg(client: Client, message: Message):
 		if i.video:
 			if i.caption:
 				filename = i.caption.split("\n")[0]+'.mp4'
+				filename = unidecode(filename)
 			else:
 				try:
-					filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")	
+					filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")
+					filename = unidecode(filename)
 				except:
 					filename = "Unknown!!!"+str(randint(00,99))+".mp4"
 		else:
 			try:
-				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")	
+				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")
+				filename = unidecode(filename)
 			except:
 				filename = "Unknown!!!"+str(randint(00,99))+".mp4"
 		
@@ -279,9 +283,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la apye 3 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "4":
-		"""if username not in USER['VIP']:
+		if username not in USER['VIP']:
 			await callback_query.answer("Cliente solo para premiums ‼️")
-			return"""
+			return
 		id = USER['APYE']['4']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientecuatro'
@@ -454,6 +458,8 @@ async def status_users(client:Client, message:Message):
 	msg = "**✦✧ ༒ Ɨ₦₣ØɌⲘ₳€ƗØ₦ ₮Ø₮₳Ⱡ ༒ ✧✦**\n"
 	for i in USER:
 		if i == 'modo':continue
+		if i == 'up':continue
+		if i == 'down':continue
 		if i == 'VIP':continue
 		if i == 'APYE':continue
 		if i == 'EDIC':continue
@@ -464,8 +470,11 @@ async def status_users(client:Client, message:Message):
 		up += USER[i]['S']
 		down += USER[i]['D']
 		info += f"Ʉ$Ʉ₳ɌƗØ: **@{i}**\n𝔻𝕖𝕤𝕔𝕒𝕣𝕘𝕒𝕕𝕠: **{D}**\n𝕊𝕦𝕓𝕚𝕕𝕠: **{S}**\n\n"
-	users = str(len(USER)-6)
+	users = str(len(USER)-8)
 	msg +=f"🅤🅢🅐🅤🅡🅘🅞🅢: **{users}**\n🅄🄿🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(up)}**\n🄳🄾🅆🄽🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(down)}**\n\n"
+	USER['up'] = int(up)
+	USER['down'] = int(down)
+	await send_config()
 	await message.reply(msg+info)
 	
 	
@@ -519,7 +528,7 @@ async def pv(client: Client, message: Message):
 		USER[username]['up_id']=splitmsg[4]
 		USER[username]['zips']=int(splitmsg[5])
 		await bot.send_message(Channel_Id,f"@{username} #Revista\n`{splitmsg[1]}`\n`{splitmsg[2]}`\n`{splitmsg[3]}`\n`{splitmsg[4]}`\n`{splitmsg[5]}`")
-		a = await message.reply("🆗 __Su revista ah sido configurada, intente subir...__")
+		a = await message.reply("🆗 __Su revista ah sido configurada, intente subir...__\n⛔**__ATENCION__**⛔\n__No puede usar las cuentas del bot como pv !!!__")
 		await send_config()
 		sleep(2.5)
 		await a.edit(f"╔═.✵.══ 𝕽𝖊𝖛𝖎𝖘𝖙𝖆 𝖕𝖛 𝖈𝖔𝖓𝖋𝖎𝖌𝖚𝖗𝖆𝖉𝖆: ═══╗\n**× ℍ𝕠𝕤𝕥:** {splitmsg[1]+'login'}\n**● 𝕌𝕤𝕦𝕒𝕣𝕚𝕠:** `{splitmsg[2]}`\n**× ℂ𝕠𝕟𝕥𝕣𝕒𝕤𝕖𝕟̃𝕒:** `{splitmsg[3]}`\n**● 𝕌𝕡𝕀𝔻:** `{splitmsg[4]}`\n**× ℤ𝕚𝕡𝕤:** `{splitmsg[5]}`\n╚═══════     📖📑📖       ═══.✵.═╝")
@@ -554,7 +563,7 @@ async def start(client: Client, message: Message):
 	if USER['modo'] != 'on' and username not in BOSS:
 		a = await message.reply("🤖")
 		sleep(3)
-		await a.edit("⚠️ **ɃØ₮ Ø₣₣** ⚠️\n__Todas las funciones del bot apagadas...__**está horario es tomado para liberar espacio en las revistas. 🥵**\nEl bot se encenderá manualmente a las 12:00, **mientras puede irse a dormir 😐 o si lo prefiere ir preparando el contenido a subir 😜**",reply_markup=tutos)
+		await a.edit("⚠️ **ɃØ₮ Ø₣₣** ⚠️\n__Todas las funciones del bot apagadas...__**está horario es tomado para liberar espacio en las revistas. 🥵**\nEl bot se encenderá manualmente, **mientras puede irse a dormir 😐 o si lo prefiere ir preparando el contenido a subir 😜**",reply_markup=tutos)
 		return
 
 	try:downlist[username]
@@ -574,13 +583,14 @@ async def start(client: Client, message: Message):
 		rv = 'ed'
 	elif b.split(".")[0] == "https://apye":
 		rv = 'a'
+	elif b.split(".")[0] == "https://revistas":
+		rv = 'u'
 	elif b == 'educa':
 		rv = 'e'
 	auto = USER[username]["auto"]
 	total = shutil.disk_usage(os.getcwd())[0]
 	used = shutil.disk_usage(os.getcwd())[1]
 	free = shutil.disk_usage(os.getcwd())[2]
-	proc = psutil.Process()
 	
 	#a = await client.send_message(username,'🔎')
 	msg = f"ıllıllı **༒__CONFIGURACIÓN LOCAL__༒** ıllıllı\n"
@@ -592,6 +602,8 @@ async def start(client: Client, message: Message):
 		msg+="☆ ℍ𝕠𝕤𝕥: **ediciones** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv == "c":
 		msg+="☆ ℍ𝕠𝕤𝕥: **cinfo** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
+	elif rv =="u":
+		msg+="☆ ℍ𝕠𝕤𝕥: **unica** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv =="ac":
 		msg+="☆ ℍ𝕠𝕤𝕥: **aeco** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 
@@ -607,7 +619,7 @@ async def start(client: Client, message: Message):
 	g = get_folder_size(f'downloads/{username}')
 	msg+=f"☆ ℝ𝕠𝕠𝕥: **⟨⟨⟨{sizeof_fmt(g)}⟩⟩⟩\n\n**"
 	#Info Dissk an CPU usage
-	msg += f"☆ 𝕮𝕻𝖀: {proc.cpu_percent(interval=0.1)}%\n"
+	msg += f"☆ 𝕮𝕻𝖀: {psutil.cpu_percent(interval=0.1)}%\n"
 	msg += f"╔──────**☆__Info. Disk__☆**──────╗\n"
 	msg += f"☆ 𝔻𝕚𝕤𝕡𝕠: **{sizeof_fmt(free)} / {sizeof_fmt(total)} ☆**\n"
 	por = (used/total)*100
@@ -1229,7 +1241,7 @@ async def down_media(client: Client, message: Message):
 	if task[username] == True:
 		await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸",quote=True)
 		return
-	if get_folder_size(f"downloads/{username}") >= 3294967296:
+	if get_folder_size(f"downloads/{username}") >= 3294967296 and username not in BOSS:
 		await send("𝕊𝕠𝕣𝕣𝕪, 𝖓𝖔 𝖕𝖚𝖉𝖊 𝖘𝖊𝖌𝖚𝖎𝖗 𝖌𝖚𝖆𝖗𝖉𝖆𝖓𝖉𝖔 𝖊𝖓 𝖊𝖑 𝖗𝖔𝖔𝖙...𝖕𝖆𝖗𝖆 𝖈𝖔𝖓𝖙𝖎𝖓𝖚𝖆𝖗 𝖑𝖎𝖒𝖕𝖎𝖊: \n**⟨⟨/all⟩⟩**",quote=True)
 		return
 	c = archivos[username]
@@ -1270,7 +1282,7 @@ async def down_link(client: Client, message: Message):
     if task[username] == True:
     	await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸",quote=True)
     	return
-    if get_folder_size(f"downloads/{username}") >= 3294967296:
+    if get_folder_size(f"downloads/{username}") >= 3294967296 and username not in BOSS:
     	await send("𝕊𝕠𝕣𝕣𝕪, 𝖓𝖔 𝖕𝖚𝖉𝖊 𝖘𝖊𝖌𝖚𝖎𝖗 𝖌𝖚𝖆𝖗𝖉𝖆𝖓𝖉𝖔 𝖊𝖓 𝖊𝖑 𝖗𝖔𝖔𝖙...𝖕𝖆𝖗𝖆 𝖈𝖔𝖓𝖙𝖎𝖓𝖚𝖆𝖗 𝖑𝖎𝖒𝖕𝖎𝖊: \n**⟨⟨/all⟩⟩**",quote=True)
     	return
     j = str(ROOT[username]["actual_root"])+"/"
@@ -1324,12 +1336,14 @@ async def up(client: Client, message: Message):
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
-	   lista = message.text.split(" ")
+	   lista = message.text.replace("_", " ").split(" ")
 	   if "-" in lista[1]:
 	   	actual = lista[1]
 	   	v1 = int(actual.split("-")[-2])
 	   	v2 = int(actual.split("-")[-1])
+	   	y = 0
 	   	for i in range(v1,v2+1):
+	   		y += v2+1
 	   		path = str(ROOT[username]["actual_root"]+"/")+msgh[1][i]
 	   		await up_revistas_api(path,user_id,msg,username)
 	   	return
