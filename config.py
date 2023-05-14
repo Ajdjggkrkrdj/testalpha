@@ -29,8 +29,7 @@ cancelar = InlineKeyboardMarkup(
 
 MENU = InlineKeyboardMarkup(
 	[	[InlineKeyboardButton("👑𝔼𝔻𝕌ℂ𝔸👑", callback_data = "EDUCA")],		[InlineKeyboardButton("༒ℝ𝕖𝕧𝔸𝕡𝕪𝕖༒", callback_data="APYE"),InlineKeyboardButton("༒ℝ𝕖𝕧𝔼𝕕𝕚𝕔༒", callback_data="EDIC")],
-		[InlineKeyboardButton("༒ℝ𝕖𝕧ℂ𝕚𝕟𝕗𝕠༒", callback_data="CINFO")],
-		[InlineKeyboardButton("༒ℝ𝕖𝕧𝕊𝕥𝕘𝕠༒", callback_data="STGO")],
+		[InlineKeyboardButton("༒ℝ𝕖𝕧ℂ𝕚𝕟𝕗𝕠༒", callback_data="CINFO"),InlineKeyboardButton("༒ℝ𝕖𝕧𝕊𝕥𝕘𝕠༒", callback_data="STGO")],
 		[InlineKeyboardButton("❌",callback_data="del")]
 	]
 )
@@ -55,7 +54,7 @@ EDIC = InlineKeyboardMarkup(
         [InlineKeyboardButton("1", callback_data="01"),
             InlineKeyboardButton("2", callback_data="02"),
             InlineKeyboardButton("3", callback_data="03")],
-            [InlineKeyboardButton("4", callback_data="04"),
+            InlineKeyboardButton("4", callback_data="04"),
             InlineKeyboardButton("5", callback_data="05")],
             [InlineKeyboardButton("⬅️", callback_data="back")]
         ]
@@ -67,7 +66,7 @@ CINFO = InlineKeyboardMarkup(
         [InlineKeyboardButton("1", callback_data="001"),
             InlineKeyboardButton("2", callback_data="002"),
             InlineKeyboardButton("3", callback_data="003")],
-            [InlineKeyboardButton("4", callback_data="004"),
+            InlineKeyboardButton("4", callback_data="004"),
             InlineKeyboardButton("5", callback_data="005")],
             [InlineKeyboardButton("⬅️", callback_data="back")]
         ]

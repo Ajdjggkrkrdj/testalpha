@@ -459,7 +459,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		USER[username]['user'] = 'jorgem5'
 		USER[username]['passw'] = 'julio8*'
 		await send_config()
-		await msg.edit("✓ Ok ahora subire a la stgo 1 ✓")
+		await msg.edit("🤖 ℂ𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟 𝕕𝕖 𝕊𝕋𝔾𝕆 🤖",reply_markup=ZIPSTGO)
 		await callback_query.answer()
 	elif callback_query.data == "0002":
 		if username not in USER['VIP']:
@@ -470,24 +470,23 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		USER[username]['user'] = 'clientedos'
 		USER[username]['passw'] = 'Cliente02*'
 		await send_config()
-		await msg.edit("✓ Ok ahora subire a la stgo 2 ✓")
+		await msg.edit("🤖 ℂ𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟 𝕕𝕖 𝕊𝕋𝔾𝕆 🤖",reply_markup=ZIPSTGO)
 	
-		return
 	elif callback_query.data == "z2":
 		USER[username]['zips'] = 20
-		await msg.edit("✓ Ok ahora tendras los zips a 20MiB ✓")
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
 		await send_config()
 	elif callback_query.data == "z3":
 		USER[username]['zips'] = 30
-		await msg.edit("✓ Ok ahora tendras los zips a 30MiB ✓")
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
 		await send_config()
 	elif callback_query.data == "z4":
 		USER[username]['zips'] = 40
-		await msg.edit("✓ Ok ahora tendras los zips a 40MiB ✓")
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
 		await send_config()
 	elif callback_query.data == "z5":
 		USER[username]['zips'] = 50
-		await msg.edit("✓ Ok ahora tendras los zips a 50MiB ✓")
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
 		await send_config()
 		"""USER[username]['host'] = 'educa'
 		USER[username]['zips'] = 2
