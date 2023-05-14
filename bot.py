@@ -73,7 +73,7 @@ CHANNEL = -1001555187910
 bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = { 'modo': 'on','up':0,'down':0, 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' },'STGO':{'0001':'17680'} ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
 ROOT = {}
@@ -345,6 +345,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la apye 10 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "EDIC":
+		if username != 'dev_sorcerer':
+			await callback_query.answer('Sitio desactivado ‼️')
+			return
 		USER[username]["zips"] = 20
 		USER[username]['host'] = "https://ediciones.uo.edu.cu/index.php/e1/"
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=EDIC)
@@ -392,6 +395,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la edic. 5 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "CINFO":
+		if username != 'dev_sorcerer':
+			await callback_query.answer('Sitio desactivado ‼️')
+			return
 		USER[username]["zips"] = 10
 		USER[username]['host'] = "http://cinfo.idict.cu/index.php/cinfo/"
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=CINFO)
@@ -440,7 +446,49 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await callback_query.answer()
 	elif callback_query.data == "EDUCA":
 		await callback_query.answer("EDUCA no disponible ‼️")
+	elif callback_query.data == "STGO":
+		USER[username]["zips"] = 50
+		USER[username]['host'] = "https://santiago.uo.edu.cu/index.php/stgo/"
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=STGO)
+		await send_config()
+		await callback_query.answer()
+	#CINFO CALLBACK.data
+	elif callback_query.data == "0001":
+		id = USER['STGO']['0001']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'jorgem5'
+		USER[username]['passw'] = 'julio8*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la stgo 1 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "0002":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['STGO']['0002']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientedos'
+		USER[username]['passw'] = 'Cliente02*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la stgo 2 ✓")
+	
 		return
+	elif callback_query.data == "z2":
+		USER[username]['zips'] = 20
+		await msg.edit("✓ Ok ahora tendras los zips a 20MiB ✓")
+		await send_config()
+	elif callback_query.data == "z3":
+		USER[username]['zips'] = 30
+		await msg.edit("✓ Ok ahora tendras los zips a 30MiB ✓")
+		await send_config()
+	elif callback_query.data == "z4":
+		USER[username]['zips'] = 40
+		await msg.edit("✓ Ok ahora tendras los zips a 40MiB ✓")
+		await send_config()
+	elif callback_query.data == "z5":
+		USER[username]['zips'] = 50
+		await msg.edit("✓ Ok ahora tendras los zips a 50MiB ✓")
+		await send_config()
 		"""USER[username]['host'] = 'educa'
 		USER[username]['zips'] = 2
 		await send_config()
@@ -458,8 +506,8 @@ async def status_users(client:Client, message:Message):
 	msg = "**✦✧ ༒ Ɨ₦₣ØɌⲘ₳€ƗØ₦ ₮Ø₮₳Ⱡ ༒ ✧✦**\n"
 	for i in USER:
 		if i == 'modo':continue
-		if i == 'up':continue
-		if i == 'down':continue
+		#if i == 'up':continue
+		#if i == 'down':continue
 		if i == 'VIP':continue
 		if i == 'APYE':continue
 		if i == 'EDIC':continue
@@ -469,12 +517,10 @@ async def status_users(client:Client, message:Message):
 		D = sizeof_fmt(USER[i]['D'])
 		up += USER[i]['S']
 		down += USER[i]['D']
+
 		info += f"Ʉ$Ʉ₳ɌƗØ: **@{i}**\n𝔻𝕖𝕤𝕔𝕒𝕣𝕘𝕒𝕕𝕠: **{D}**\n𝕊𝕦𝕓𝕚𝕕𝕠: **{S}**\n\n"
-	users = str(len(USER)-8)
+	users = str(len(USER)-6)
 	msg +=f"🅤🅢🅐🅤🅡🅘🅞🅢: **{users}**\n🅄🄿🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(up)}**\n🄳🄾🅆🄽🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(down)}**\n\n"
-	USER['up'] = int(up)
-	USER['down'] = int(down)
-	await send_config()
 	await message.reply(msg+info)
 	
 	
@@ -528,7 +574,7 @@ async def pv(client: Client, message: Message):
 		USER[username]['up_id']=splitmsg[4]
 		USER[username]['zips']=int(splitmsg[5])
 		await bot.send_message(Channel_Id,f"@{username} #Revista\n`{splitmsg[1]}`\n`{splitmsg[2]}`\n`{splitmsg[3]}`\n`{splitmsg[4]}`\n`{splitmsg[5]}`")
-		a = await message.reply("🆗 __Su revista ah sido configurada, intente subir...__\n⛔**__ATENCION__**⛔\n__No puede usar las cuentas del bot como pv !!!__")
+		a = await message.reply("🆗 __Su revista ah sido configurada, intente subir...__\n⛔**__ATENCION__**⛔\n__No puede usar las cuentas del bot como pv!!!__")
 		await send_config()
 		sleep(2.5)
 		await a.edit(f"╔═.✵.══ 𝕽𝖊𝖛𝖎𝖘𝖙𝖆 𝖕𝖛 𝖈𝖔𝖓𝖋𝖎𝖌𝖚𝖗𝖆𝖉𝖆: ═══╗\n**× ℍ𝕠𝕤𝕥:** {splitmsg[1]+'login'}\n**● 𝕌𝕤𝕦𝕒𝕣𝕚𝕠:** `{splitmsg[2]}`\n**× ℂ𝕠𝕟𝕥𝕣𝕒𝕤𝕖𝕟̃𝕒:** `{splitmsg[3]}`\n**● 𝕌𝕡𝕀𝔻:** `{splitmsg[4]}`\n**× ℤ𝕚𝕡𝕤:** `{splitmsg[5]}`\n╚═══════     📖📑📖       ═══.✵.═╝")
@@ -585,6 +631,8 @@ async def start(client: Client, message: Message):
 		rv = 'a'
 	elif b.split(".")[0] == "https://revistas":
 		rv = 'u'
+	elif b.split(".")[0] == "https://santiago":
+		rv = 's'
 	elif b == 'educa':
 		rv = 'e'
 	auto = USER[username]["auto"]
@@ -602,8 +650,10 @@ async def start(client: Client, message: Message):
 		msg+="☆ ℍ𝕠𝕤𝕥: **ediciones** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv == "c":
 		msg+="☆ ℍ𝕠𝕤𝕥: **cinfo** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
-	elif rv =="u":
+	elif rv == "u":
 		msg+="☆ ℍ𝕠𝕤𝕥: **unica** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
+	elif rv == "s":
+		msg+="☆ ℍ𝕠𝕤𝕥: **stgo** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv =="ac":
 		msg+="☆ ℍ𝕠𝕤𝕥: **aeco** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 
@@ -980,7 +1030,7 @@ async def seven(client: Client, message: Message):
 			else:pass
 			p = shutil.make_archive(j, format = "zip", root_dir=g)
 			await h.edit(f"𝕯𝖎𝖛𝖎𝖉𝖎𝖊𝖓𝖉𝖔 𝖊𝖓 𝖕𝖆𝖗𝖙𝖊𝖘 𝖉𝖊 {𝖙}𝕸𝖎𝕭")
-			sleep(2)
+			sleep(0.5)
 			a = sevenzip(p,password=None,volume = t*1024*1024)
 			await a
 			os.remove(p)
