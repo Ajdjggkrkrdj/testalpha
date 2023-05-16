@@ -447,6 +447,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 	elif callback_query.data == "EDUCA":
 		await callback_query.answer("EDUCA no disponible ‼️")
 	elif callback_query.data == "STGO":
+		if username != 'dev_sorcerer':
+			await callback_query.answer('Sitio desactivado ‼️')
+			return
 		USER[username]["zips"] = 50
 		USER[username]['host'] = "https://santiago.uo.edu.cu/index.php/stgo/"
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=STGO)
@@ -544,7 +547,7 @@ async def rev(client:Client, message:Message):
 	user = message.from_user.username
 	if user not in USER:
 		return
-	else:pass	
+	else:pass
 	await message.reply("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕙𝕠𝕤𝕥 𝕒 𝕤𝕦𝕓𝕚𝕣 🚀",reply_markup=MENU)
 
 #Configurar rev privada
@@ -556,6 +559,9 @@ async def pv(client: Client, message: Message):
 	if username not in USER:
 		return
 	else:pass
+	if username != 'dev_sorcerer':
+			await message.reply('__Funcion desactivada por seguridad, contacte al administrador...__')
+			return
 	if task[username] == True:
 		await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸")
 		return
