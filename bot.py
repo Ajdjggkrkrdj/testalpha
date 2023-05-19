@@ -1510,7 +1510,7 @@ async def up_revistas_api(file,usid,msg,username):
 		connector = aiohttp.TCPConnector()
 		if proxy != False:
 			try:
-				connector = aiohttp_socks.ProxyConnector.from_url(proxy)
+				connector = aiohttp_socks.ProxyConnector.from_url(str(proxy))
 			except:
 				connector = aiohttp.TCPConnector()
 		async with aiohttp.ClientSession(connector=connector) as session:
