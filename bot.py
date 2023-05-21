@@ -1298,6 +1298,7 @@ async def down_media(client: Client, message: Message):
 	if username not in BOSS and c >=5:
 		await send("**❌ MAXIMO A DESCARGAR 5 ❌**",reply_markup=DOWN)
 		return
+	sleep(0.2)
 	downlist[username].append(message)
 	await send("↪️ **ARCHIVO CARGADO** ⤵️",reply_markup=DOWN,quote=True)
 	archivos[username]+=1
@@ -1427,13 +1428,13 @@ def update_progress_down(inte,max):
 	percentage = inte / max
 	percentage *= 100
 	percentage = round(percentage)
-	hashes = int(percentage / 6)
-	spaces = 19 - hashes
+	hashes = int(percentage / 5)
+	spaces = 16 - hashes
 	progress_bar = "⬢" * hashes + "⬡" * spaces
 	#percentage_pos = int(hashes / 1)
 	#percentage_string = str(percentage) + "%"
 	
-	return "       **⟨[" + progress_bar + "]⟩**"
+	return "     **⟨["+progress_bar+"]⟩**"
 
 seg=0
 #Subida a telegram xel cmd /tg
@@ -1461,7 +1462,7 @@ async def progress_down_tg(chunk,total,filename,start,message):
 	#mbs = chunk / diff
 	por = (chunk/total)*100
 	por = round(por)
-	msg = "|         **«-🔥 𝔻𝕠𝕨𝕟𝕝𝕠𝕒𝕕𝕚𝕟𝕘 {por}% ♨️-»**        |\n\n"
+	msg = f"|         **«-🔥 𝔻𝕠𝕨𝕟𝕝𝕠𝕒𝕕𝕚𝕟𝕘 {por}% ♨️-»**        |\n\n"
 	try:
 		msg+= update_progress_down(chunk,total)
 	except: pass	
@@ -1560,8 +1561,14 @@ async def up_revistas_api(file,usid,msg,username):
 								try:
 									upload_data = {}
 									upload_data["fileStage"] = "2"
-									upload_data["name[es_ES]"] = file.split('/')[-1]
-									upload_data["name[en_US]"] = file.split('/')[-1]
+									if host.split(".")[0] == "https://revistas":
+										upload_data["name[es_ES]"] = file.split('/')[-1]+".pdf"
+									else:
+										upload_data["name[es_ES]"] = file.split('/')[-1]
+									if host.split(".")[0] == "https://revistas":
+										upload_data["name[en_US]"] = file.split('/')[-1]+".pdf"
+									else:
+										upload_data["name[en_US]"] = file.split('/')[-1]
 									post_file_url = host + 'api/v1/submissions/'+ up_id +'/files'
 									if host.split(".")[0] == "https://revistas":
 										filenow = file+".pdf"
