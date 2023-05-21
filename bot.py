@@ -1429,7 +1429,7 @@ def update_progress_down(inte,max):
 	percentage *= 100
 	percentage = round(percentage)
 	hashes = int(percentage / 5)
-	spaces = 16 - hashes
+	spaces = 18 - hashes
 	progress_bar = "⬢" * hashes + "⬡" * spaces
 	#percentage_pos = int(hashes / 1)
 	#percentage_string = str(percentage) + "%"
@@ -1464,9 +1464,10 @@ async def progress_down_tg(chunk,total,filename,start,message):
 	por = round(por)
 	msg = f"|         **«-🔥 𝔻𝕠𝕨𝕟𝕝𝕠𝕒𝕕𝕚𝕟𝕘 {por}% ♨️-»**        |\n\n"
 	try:
-		msg+= update_progress_down(chunk,total)
+		msg+= update_progress_down(chunk,total)+"\n"
 	except: pass	
-	msg+= f"\n|-----------------------------------------------------------------|\n**•🐰•** `{filename}`"
+	msg+= "|-----------------------------------------------------------------|"
+	msg+=f"\n**•🐰•** `{filename}`"
 	if seg != localtime().tm_sec:
 		try: await message.edit(msg)
 		except:pass
@@ -1574,10 +1575,11 @@ async def up_revistas_api(file,usid,msg,username):
 										filenow = file+".pdf"
 										os.rename(file,filenow)
 										fi = Progress(filenow,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
+										query = {"filenow":fi,**upload_data}
 									else:
 										fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
-									
-									query = {"file":fi,**upload_data}
+										query = {"file":fi,**upload_data}
+																		
 									async with session.post(post_file_url,data=query,headers={'X-Csrf-token':csrfToken}) as resp:
 										text = await resp.text()
 										if '_href' in text:
@@ -1594,10 +1596,8 @@ async def up_revistas_api(file,usid,msg,username):
 											await bot.send_message(usid,f"👾**F:** `{file.split('/')[-1]}`")
 								except:
 									pass
-							if host.split(".")[0] == "https://revistas":
-								await msg.delete()
-							else:
-								await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")
+									
+							await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")
 							await bot.unpin_chat_message(usid,msg.id)
 							await bot.send_message(usid,f"💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️")
 							txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
