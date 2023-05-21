@@ -146,7 +146,7 @@ async def carga_tg(client: Client, message: Message):
 	ms = await send("𝕆𝕓𝕥𝕖𝕟𝕚𝕖𝕟𝕕𝕠 𝕀𝕟𝕗𝕠𝕣𝕞𝕒𝕔𝕚𝕠́𝕟...",reply_markup=ReplyKeyboardRemove())
 	await ms.delete()
 	msg = await send("𝕆𝕓𝕥𝕖𝕟𝕚𝕖𝕟𝕕𝕠 𝕀𝕟𝕗𝕠𝕣𝕞𝕒𝕔𝕚𝕠́𝕟...")
-	sleep(1)
+	sleep(0.5)
 	#await ms.delete()
 	#msg = await message.reply("🔄")
 	count = 0
@@ -155,7 +155,7 @@ async def carga_tg(client: Client, message: Message):
 		filesize = int(str(i).split('"file_size":')[1].split(",")[0])
 		if i.video:
 			if i.caption:
-				filename = i.caption.split("\n")[0]+'.mp4'
+				filename = i.caption.split("\n")[0].replace("/","-").replace(","," ").replace("."," ")+'.mp4'
 				filename = unidecode(filename)
 			else:
 				try:
@@ -165,7 +165,7 @@ async def carga_tg(client: Client, message: Message):
 					filename = "Unknown!!!"+str(randint(00,99))+".mp4"
 		else:
 			try:
-				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"")
+				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"").replace('/','')
 				filename = unidecode(filename)
 			except:
 				filename = "Unknown!!!"+str(randint(00,99))+".mp4"
@@ -198,38 +198,7 @@ async def carga_tg(client: Client, message: Message):
 		task[username] = False
 		return
 
-##Identificar el modo en el q se encuentra el bot
-"""@bot.on_message()
-async def messages_handler(client: Client,message: Message):
-	msg = message.text
-	username = message.from_user.username
-	if username not in BOSS and USER['modo']=="off":
-				a = await message.reply("🤖")
-				time.sleep(3)
-				await a.edit("⚠️ **ɃØ₮ Ø₣₣** ⚠️\n__Todas las funciones del bot apagadas...__**está horario es tomado para liberar espacio en las revistas. 🥵**\nEl bot se encenderá manualmente a las 12:00, **mientras puede irse a dormir 😐 o si lo prefiere ir preparando el contenido a subir 😜**")
-				return
-	elif username not in BOSS and USER['modo']=='on':
-				try:downlist[username]
-				except:downlist[username] = []
-				if exists('downloads/'+str(username)+'/'):pass
-				else:
-					os.makedirs('downloads/'+str(username)+'/')
-					try:ROOT[username]
-					except:ROOT[username] = {"actual_root":f"downloads/{str(username)}"}
-	
-	if msg.startswith("/status"):
-				if username in BOSS:
-					if USER["modo"]=='on':
-						USER["modo"]='off'
-						await message.reply("✓ Status **OFF** ✓")
-						await send_config()
-					elif USER["modo"]=='off':
-						USER["modo"]=='on'
-						await message.reply("✓ Status **ON** ✓")
-						await send_config()
-					return
-					
-"""				
+
 ##CallBackQuery-->RevistaS##
 @bot.on_callback_query()
 async def callback_query(client:Client, callback_query:CallbackQuery):
@@ -827,7 +796,7 @@ def files_formatter(path,username):
 			msg+=f"**{i}≽** 📂 `{n}` **[{sizeof_fmt(carp)}]\n╰➣『/cd_{i}』『/sev_{i}』『/del_{i}』** \n"
 			
 		else:
-			msg+=f"**{i}≽** `{n}`\n**╰➣『/up_{i}』『/del_{i}』[{sizeof_fmt(size)}]**\n"
+			msg+=f"**{i}•≽** `{n}`\n   **╰➣『/up_{i}』『/del_{i}』[{sizeof_fmt(size)}]**\n"
 		
 		i+=1
 	if str(rut).split("downloads/")[-1] != username:
@@ -883,6 +852,15 @@ async def rename(client: Client, message: Message):
 	else:pass
 	if username not in BOSS and USER['modo'] != 'on':
 		return
+	try:downlist[username]
+	except:downlist[username] = []
+	if exists('downloads/'+str(username)+'/'):pass
+	else:
+		os.makedirs('downloads/'+str(username)+'/')
+	try:ROOT[username]
+	except:ROOT[username] = {"actual_root":f"downloads/{str(username)}"}
+	try:task[username]
+	except:task[username] = False
 	if task[username] == True:
 		await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸")
 		return
@@ -923,6 +901,15 @@ async def rm(client: Client, message: Message):
 	else:pass
 	if username not in BOSS and USER['modo'] != 'on':
 		return
+	try:downlist[username]
+	except:downlist[username] = []
+	if exists('downloads/'+str(username)+'/'):pass
+	else:
+		os.makedirs('downloads/'+str(username)+'/')
+	try:ROOT[username]
+	except:ROOT[username] = {"actual_root":f"downloads/{str(username)}"}
+	try:task[username]
+	except:task[username] = False
 	if task[username] == True:
 		await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸")
 		return
@@ -1115,6 +1102,15 @@ async def cmd_mkdir(client: Client, message: Message):
 	else:pass
 	if username not in BOSS and USER['modo'] != 'on':
 		return
+	try:downlist[username]
+	except:downlist[username] = []
+	if exists('downloads/'+str(username)+'/'):pass
+	else:
+		os.makedirs('downloads/'+str(username)+'/')
+	try:ROOT[username]
+	except:ROOT[username] = {"actual_root":f"downloads/{str(username)}"}
+	try:task[username]
+	except:task[username] = False
 	if task[username] == True:
 		await message.reply("𝕋𝕚𝕖𝕟𝕖 𝕦𝕟 𝕡𝕣𝕠𝕔𝕖𝕤𝕠 𝕖𝕟 𝕔𝕦𝕣𝕤𝕠, 𝕡𝕠𝕣 𝕗𝕒𝕧𝕠𝕣 𝕖𝕤𝕡𝕖𝕣𝕖 🤸")
 		return
@@ -1433,12 +1429,11 @@ def update_progress_down(inte,max):
 	percentage = round(percentage)
 	hashes = int(percentage / 6)
 	spaces = 19 - hashes
-	progress_bar = "■" * hashes + "▣" * spaces
-	percentage_pos = int(hashes / 1)
-	percentage_string = str(percentage) + "%"
+	progress_bar = "⬢" * hashes + "⬡" * spaces
+	#percentage_pos = int(hashes / 1)
+	#percentage_string = str(percentage) + "%"
 	
-	progress_bar = "**[" + progress_bar[:percentage_pos] + percentage_string + progress_bar[percentage_pos + len(percentage_string):] +"]**"
-	return(progress_bar)
+	return "       **⟨[" + progress_bar + "]⟩**"
 
 seg=0
 #Subida a telegram xel cmd /tg
@@ -1464,12 +1459,13 @@ async def progress_down_tg(chunk,total,filename,start,message):
 	#now = time()
 	#diff = now - start
 	#mbs = chunk / diff
-	
-	msg = "-======================-\n|DESCARGA EN PROGRESO|\n-======================-\n"
+	por = (chunk/total)*100
+	por = round(por)
+	msg = "|         **«-🔥 𝔻𝕠𝕨𝕟𝕝𝕠𝕒𝕕𝕚𝕟𝕘 {por}% ♨️-»**        |\n\n"
 	try:
-		msg+= update_progress_down(chunk,total)+"\n"
+		msg+= update_progress_down(chunk,total)
 	except: pass	
-	msg+= f"\n📥**•𝔻𝕠𝕨𝕟: {sizeof_fmt(chunk)}/{sizeof_fmt(total)}**\n🏷️**•ℕ𝕒𝕞𝕖:** `{filename}`"
+	msg+= f"\n|-----------------------------------------------------------------|\n**•🐰•** `{filename}`"
 	if seg != localtime().tm_sec:
 		try: await message.edit(msg)
 		except:pass
@@ -1507,12 +1503,14 @@ async def up_revistas_api(file,usid,msg,username):
 		headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0'}
 		#login
 		msg = await msg.edit("💫 **Preparando subida...**")
-		connector = aiohttp.TCPConnector()
+		
 		if proxy != False:
 			try:
-				connector = aiohttp_socks.ProxyConnector.from_url(str(proxy))
+				connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
 			except:
 				connector = aiohttp.TCPConnector()
+		else:
+			connector = aiohttp.TCPConnector()
 		async with aiohttp.ClientSession(connector=connector) as session:
 			async with session.get(host + "login") as response:
 				html = await response.text()
@@ -1565,7 +1563,13 @@ async def up_revistas_api(file,usid,msg,username):
 									upload_data["name[es_ES]"] = file.split('/')[-1]
 									upload_data["name[en_US]"] = file.split('/')[-1]
 									post_file_url = host + 'api/v1/submissions/'+ up_id +'/files'
-									fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
+									if host.split(".")[0] == "https://revistas":
+										filenow = file+".pdf"
+										os.rename(file,filenow)
+										fi = Progress(filenow,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
+									else:
+										fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
+									
 									query = {"file":fi,**upload_data}
 									async with session.post(post_file_url,data=query,headers={'X-Csrf-token':csrfToken}) as resp:
 										text = await resp.text()
@@ -1574,24 +1578,34 @@ async def up_revistas_api(file,usid,msg,username):
 											url = str(parse).split('url":"')[1].split('"')[0]
 											links.append(url)
 											subido+=1
-											await bot.send_message(usid,f"**[{file.split('/')[-1]}]({url})**",disable_web_page_preview=True)
+											if host.split(".")[0] == "https://revistas":pass
+											else:
+												await bot.send_message(usid,f"**[{file.split('/')[-1]}]({url})**",disable_web_page_preview=True)
 											USER[username]['S']+=zipssize
 											await send_config()
 										else:
 											await bot.send_message(usid,f"👾**F:** `{file.split('/')[-1]}`")
 								except:
 									pass
-							await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")							
+							if host.split(".")[0] == "https://revistas":
+								await msg.delete()
+							else:
+								await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")
+							await bot.unpin_chat_message(usid,msg.id)
 							await bot.send_message(usid,f"💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️")
 							txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
 							with open(txtname,"w") as t:
 								message = ""
 								for li in links:
-									message+=li+"\n"
+									if host.split(".")[0] == "https://revistas":
+										message+=li+f"	{file.split('/')[-1].split('.pdf')[0]}\n"
+									else:
+										message+=li+"\n"
 								t.write(message)
 								t.close()
-							await bot.send_document(usid,txtname,caption=f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀\nℍ𝕠𝕤𝕥: {host}login\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`", thumb='thumb.jpg')
-							await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login #txt",thumb = 'thumb.jpg')
+							pin = await bot.send_document(usid,txtname,caption=f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀\nℍ𝕠𝕤𝕥: {host}login\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`", thumb='thumb.jpg')
+							await bot.pin_chat_message(usid,pin.id, disable_notification=True,both_sides=True)
+							await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
 							task[username] = False
 							os.unlink(txtname)
 						else:
