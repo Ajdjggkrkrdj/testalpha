@@ -1574,11 +1574,10 @@ async def up_revistas_api(file,usid,msg,username):
 									if host.split(".")[0] == "https://revistas":
 										filenow = file+".pdf"
 										os.rename(file,filenow)
-										fi = Progress(filenow,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
-										query = {"filenow":fi,**upload_data}
+										fi = Progress(filenow,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))	
 									else:
 										fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
-										query = {"file":fi,**upload_data}
+									query = {"file":fi,**upload_data}
 																		
 									async with session.post(post_file_url,data=query,headers={'X-Csrf-token':csrfToken}) as resp:
 										text = await resp.text()
