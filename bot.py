@@ -461,7 +461,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a stgo ✓")
 		await send_config()
 	elif callback_query.data == "REGU":
-		USER[username]['zips'] = 20
+		USER[username]['zips'] = 19
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=REGU)
 		await callback_query.answer()
 		USER[username]['host'] = "https://revistas.unica.cu/index.php/regu/"
@@ -1601,7 +1601,7 @@ def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 	msg+= f"📤**•𝕌𝕡𝕝𝕠𝕒𝕕: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**\n🏷️**•ℕ𝕒𝕞𝕖:** `{filename}`\n"
 	global seg
 	if seg != localtime().tm_sec:
-		message.edit(msg)
+		message.edit(msg,reply_markup=cancelar)
 	seg = localtime().tm_sec
 
 #Subida a la revistas :)
