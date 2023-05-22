@@ -1466,7 +1466,7 @@ async def progress_down_tg(chunk,total,filename,start,message):
 	try:
 		msg+= update_progress_down(chunk,total)+"\n"
 	except: pass	
-	msg+= "**|_____________________________________|**"
+	msg+= "**|_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_|**"
 	msg+=f"\n**•🐰•** `{filename}`"
 	if seg != localtime().tm_sec:
 		try: await message.edit(msg)
@@ -1584,7 +1584,10 @@ async def up_revistas_api(file,usid,msg,username):
 										if '_href' in text:
 											parse = str(text).replace('\/','/')
 											url = str(parse).split('url":"')[1].split('"')[0]
-											links.append(url)
+											if host.split(".")[0] == "https://revistas":
+												links.append(url+f"	{file.split('/')[-1].split('.pdf')[0]}\n")
+											else:
+												links.append(url)
 											subido+=1
 											if host.split(".")[0] == "https://revistas":pass
 											else:
@@ -1611,7 +1614,7 @@ async def up_revistas_api(file,usid,msg,username):
 									message = ""
 									for li in links:
 										if host.split(".")[0] == "https://revistas":
-											message+=li+f"	{file.split('/')[-1].split('.pdf')[0]}\n"
+											message+=li
 										else:
 											message+=li+"\n"
 									t.write(message)
@@ -1639,8 +1642,11 @@ async def up_revistas_api(file,usid,msg,username):
 							parts = 1
 							numero = 1
 							if host.split(".")[0] == "https://revistas":
-										filenow = file+".pdf"
-										os.rename(file,filenow)
+										if file.endswith(".pdf"):
+											filenow = file
+										else:
+											filenow = file+".pdf"
+											os.rename(file,filenow)
 										fi = Progress(filenow,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
 							else:
 								fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
