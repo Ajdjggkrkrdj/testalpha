@@ -73,7 +73,7 @@ CHANNEL = -1001555187910
 bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' },'STGO':{'0001':'17680'} ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' },'STGO':{'0001':'17680'},'REGU':{'r1': '3221'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '268'  ,'r02': '270'  ,'r03': '272'  ,'r04': '274'  ,'r05': '275' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
 ROOT = {}
@@ -146,7 +146,7 @@ async def carga_tg(client: Client, message: Message):
 	ms = await send("𝕆𝕓𝕥𝕖𝕟𝕚𝕖𝕟𝕕𝕠 𝕀𝕟𝕗𝕠𝕣𝕞𝕒𝕔𝕚𝕠́𝕟...",reply_markup=ReplyKeyboardRemove())
 	await ms.delete()
 	msg = await send("𝕆𝕓𝕥𝕖𝕟𝕚𝕖𝕟𝕕𝕠 𝕀𝕟𝕗𝕠𝕣𝕞𝕒𝕔𝕚𝕠́𝕟...")
-	sleep(0.5)
+	sleep(0.3)
 	#await ms.delete()
 	#msg = await message.reply("🔄")
 	count = 0
@@ -460,6 +460,121 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		USER[username]['zips'] = 50
 		await msg.edit("✓ Ok ahora subire a stgo ✓")
 		await send_config()
+	elif callback_query.data == "REGU":
+		USER[username]['zips'] = 20
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=REGU)
+		await callback_query.answer()
+		USER[username]['host'] = "https://revistas.unica.cu/index.php/regu/"
+		await send_config()
+	#REGU CALLBACK.data
+	elif callback_query.data == "r1":
+		id = USER['REGU']['r1']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clienteuno'
+		USER[username]['passw'] = 'C1i3nte01*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la regu 1 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r2":
+		id = USER['REGU']['r2']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientedos'
+		USER[username]['passw'] = 'C1i3nte02*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la regu 2 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r3":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['REGU']['r3']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientetres'
+		USER[username]['passw'] = 'C1i3nte03*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la regu 3 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r4":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['REGU']['r4']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecuatro'
+		USER[username]['passw'] = 'C1i3nte04*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la regu 4 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r5":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['REGU']['r5']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecinco'
+		USER[username]['passw'] = 'C1i3nte505*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la regu 5 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "UCIE":
+		if username != 'dev_sorcerer':
+			await callback_query.answer("Dentro de poco ‼️")
+			return
+		USER[username]['zips'] = 20
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=UCIE)
+		await callback_query.answer()
+		USER[username]['host'] = "https://revistas.unica.cu/index.php/uciencia/"
+		await send_config()
+	#APYE CALLBACK.data
+	elif callback_query.data == "r01":
+		id = USER['REGU']['r01']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clienteuno'
+		USER[username]['passw'] = '1cLiente01*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la uciencia 1 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r02":
+		id = USER['UCIE']['r02']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientedos'
+		USER[username]['passw'] = '2cLiente02*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la uciencia 2 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r03":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['UCIE']['r03']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientetres'
+		USER[username]['passw'] = 'C1i3nte03*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la uciencia 3 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r04":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['UCIE']['r04']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecuatro'
+		USER[username]['passw'] = 'fC1i3nte04*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la uciencia 4 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "r05":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['UCIE']['r05']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecinco'
+		USER[username]['passw'] = 'fC1i3nte505*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la uciencia 5 ✓")
+		await callback_query.answer()
 		"""USER[username]['host'] = 'educa'
 		USER[username]['zips'] = 2
 		await send_config()
@@ -1429,7 +1544,7 @@ def update_progress_down(inte,max):
 	percentage *= 100
 	percentage = round(percentage)
 	hashes = int(percentage / 6)
-	spaces = 19 - hashes
+	spaces = 18 - hashes
 	progress_bar = "⬢" * hashes + "⬡" * spaces
 	#percentage_pos = int(hashes / 1)
 	#percentage_string = str(percentage) + "%"
@@ -1489,7 +1604,7 @@ def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 		message.edit(msg)
 	seg = localtime().tm_sec
 
-#Subida a la nube
+#Subida a la revistas :)
 async def up_revistas_api(file,usid,msg,username):
 	try:
 		host=USER[username]["host"]
