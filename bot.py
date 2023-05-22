@@ -1428,13 +1428,13 @@ def update_progress_down(inte,max):
 	percentage = inte / max
 	percentage *= 100
 	percentage = round(percentage)
-	hashes = int(percentage / 5)
-	spaces = 18 - hashes
+	hashes = int(percentage / 6)
+	spaces = 19 - hashes
 	progress_bar = "⬢" * hashes + "⬡" * spaces
 	#percentage_pos = int(hashes / 1)
 	#percentage_string = str(percentage) + "%"
 	
-	return "     **⟨["+progress_bar+"]⟩**"
+	return "    **⟨["+progress_bar+"]⟩**"
 
 seg=0
 #Subida a telegram xel cmd /tg
@@ -1462,11 +1462,11 @@ async def progress_down_tg(chunk,total,filename,start,message):
 	#mbs = chunk / diff
 	por = (chunk/total)*100
 	por = round(por)
-	msg = f"|         **«-🔥 𝔻𝕠𝕨𝕟𝕝𝕠𝕒𝕕𝕚𝕟𝕘 {por}% ♨️-»**        |\n\n"
+	msg = f"**|        «-🔥 𝔻𝕠𝕨𝕟𝕝𝕠𝕒𝕕𝕚𝕟𝕘 {por}% ♨️-»        |**\n\n"
 	try:
 		msg+= update_progress_down(chunk,total)+"\n"
 	except: pass	
-	msg+= "|-----------------------------------------------------------------|"
+	msg+= "**|_____________________________________|**"
 	msg+=f"\n**•🐰•** `{filename}`"
 	if seg != localtime().tm_sec:
 		try: await message.edit(msg)
@@ -1589,42 +1589,61 @@ async def up_revistas_api(file,usid,msg,username):
 											if host.split(".")[0] == "https://revistas":pass
 											else:
 												await bot.send_message(usid,f"**[{file.split('/')[-1]}]({url})**",disable_web_page_preview=True)
-											USER[username]['S']+=zipssize
+											try:
+												upsize = Path(file).stat().st_size
+											except:
+												upsize = Path(filenow).stat().st_size
+											USER[username]['S']+=upsize
 											await send_config()
 										else:
 											await bot.send_message(usid,f"👾**F:** `{file.split('/')[-1]}`")
 								except:
 									pass
-									
-							await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")
 							await bot.unpin_chat_message(usid,msg.id)
+							if host.split(".")[0] == "https://revistas":
+								await msg.delete()		
+							else:
+								await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")							
 							await bot.send_message(usid,f"💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️")
-							txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
-							with open(txtname,"w") as t:
-								message = ""
-								for li in links:
-									if host.split(".")[0] == "https://revistas":
-										message+=li+f"	{file.split('/')[-1].split('.pdf')[0]}\n"
-									else:
-										message+=li+"\n"
-								t.write(message)
-								t.close()
-							pin = await bot.send_document(usid,txtname,caption=f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀\nℍ𝕠𝕤𝕥: {host}login\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`", thumb='thumb.jpg')
-							await bot.pin_chat_message(usid,pin.id, disable_notification=True,both_sides=True)
-							await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
-							task[username] = False
-							os.unlink(txtname)
+							if int(subido)>0:
+								txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
+								with open(txtname,"w") as t:
+									message = ""
+									for li in links:
+										if host.split(".")[0] == "https://revistas":
+											message+=li+f"	{file.split('/')[-1].split('.pdf')[0]}\n"
+										else:
+											message+=li+"\n"
+									t.write(message)
+									t.close()
+								pin = await bot.send_document(usid,txtname,caption=f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀\nℍ𝕠𝕤𝕥: {host}login\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`", thumb='thumb.jpg')
+								await bot.pin_chat_message(usid,pin.id, disable_notification=True,both_sides=True)
+								await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
+								task[username] = False
+								os.unlink(txtname)
+							else:pass
 						else:
 							await msg.edit("**«⟨丂凵乃丨乇几ᗪㄖ⟩»**")
 							sleep(0.5)
 							upload_data = {}
 							upload_data["fileStage"] = "2"
-							upload_data["name[es_ES]"] = file.split('/')[-1]
-							upload_data["name[en_US]"] = file.split('/')[-1]
+							if host.split(".")[0] == "https://revistas":
+								upload_data["name[es_ES]"] = file.split('/')[-1]+".pdf"
+							else:
+								upload_data["name[es_ES]"] = file.split('/')[-1]
+							if host.split(".")[0] == "https://revistas":
+								upload_data["name[en_US]"] = file.split('/')[-1]+".pdf"
+							else:
+								upload_data["name[en_US]"] = file.split('/')[-1]
 							post_file_url = host + 'api/v1/submissions/'+ up_id +'/files'
 							parts = 1
 							numero = 1
-							fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
+							if host.split(".")[0] == "https://revistas":
+										filenow = file+".pdf"
+										os.rename(file,filenow)
+										fi = Progress(filenow,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
+							else:
+								fi = Progress(file,lambda current,total,timestart,filename: uploadfile_progres(current,total,timestart,filename,msg,parts,numero))
 							query = {"file":fi,**upload_data}
 							async with session.post(post_file_url,data=query,headers={'X-Csrf-token':csrfToken}) as resp:
 								text = await resp.text()
