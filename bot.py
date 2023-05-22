@@ -1544,12 +1544,12 @@ def update_progress_down(inte,max):
 	percentage *= 100
 	percentage = round(percentage)
 	hashes = int(percentage / 6)
-	spaces = 18 - hashes
+	spaces = 17 - hashes
 	progress_bar = "⬢" * hashes + "⬡" * spaces
 	#percentage_pos = int(hashes / 1)
 	#percentage_string = str(percentage) + "%"
 	
-	return "    **⟨["+progress_bar+"]⟩**"
+	return "      **⟨["+progress_bar+"]⟩**"
 
 seg=0
 #Subida a telegram xel cmd /tg
