@@ -1549,7 +1549,7 @@ def update_progress_down(inte,max):
 	#percentage_pos = int(hashes / 1)
 	#percentage_string = str(percentage) + "%"
 	
-	return "      **⟨["+progress_bar+"]⟩**"
+	return "       **⟨["+progress_bar+"]⟩**"
 
 seg=0
 #Subida a telegram xel cmd /tg
@@ -1624,7 +1624,8 @@ async def up_revistas_api(file,usid,msg,username):
 		if proxy != False:
 			try:
 				connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
-			except:
+			except Exception as ex:
+				await message.reply(f"{ex}")
 				connector = aiohttp.TCPConnector()
 		else:
 			connector = aiohttp.TCPConnector()
