@@ -579,13 +579,13 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la uciencia 5 ✓")
 		await callback_query.answer()
-	elif callback_query.data == "REGU":
+	elif callback_query.data == "TECE":
 		USER[username]['zips'] = 4
-		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=REGU)
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=TECE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://tecedu.uho.edu.cu/index.php/tecedu/"
 		await send_config()
-	#REGU CALLBACK.data
+	#TECE CALLBACK.data
 	elif callback_query.data == "t1":
 		id = USER['TECE']['t1']
 		USER[username]['up_id'] = id
@@ -1813,14 +1813,14 @@ async def up_revistas_api(file,usid,msg,username):
 							upload_data = {}
 							upload_data["fileStage"] = "2"
 							if host.split(".")[0] == "https://revistas" or host.split(".")[0] == "https://tecedu":
-								if file.endswith(".pdf"):
+								if file.split('/')[-1].endswith(".pdf"):
 									upload_data["name[en_US]"] = file.split('/')[-1]
 								else:
 									upload_data["name[en_US]"] = file.split('/')[-1]+".pdf"
 							else:
 								upload_data["name[es_ES]"] = file.split('/')[-1]
 							if host.split(".")[0] == "https://revistas" or host.split(".")[0] == "https://tecedu":
-								if file.endswith(".pdf"):
+								if file.split('/')[-1].endswith(".pdf"):
 									upload_data["name[en_US]"] = file.split('/')[-1]
 								else:
 									upload_data["name[en_US]"] = file.split('/')[-1]+".pdf"
@@ -1830,7 +1830,7 @@ async def up_revistas_api(file,usid,msg,username):
 							parts = 1
 							numero = 1
 							if host.split(".")[0] == "https://revistas" or host.split(".")[0] == "https://tecedu":
-										if file.endswith(".pdf"):
+										if file.split('/')[-1].endswith(".pdf"):
 											filenow = file
 										else:
 											filenow = file+".pdf"
