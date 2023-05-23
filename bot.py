@@ -202,7 +202,7 @@ async def carga_tg(client: Client, message: Message):
 
 ##CallBackQuery-->RevistaS##
 @bot.on_callback_query()
-async def callback_query(client:Client, callback_query:CallbackQuery, message: Message):
+async def callback_query(client:Client, callback_query:CallbackQuery):
 	msg = callback_query.message
 	username = callback_query.from_user.username
 	if callback_query.data == "root":
@@ -213,7 +213,8 @@ async def callback_query(client:Client, callback_query:CallbackQuery, message: M
 	elif callback_query.data == "cancelar":
 		task[username]=False
 		await msg.delete()
-		await message.reply("✓ __Subida actual cancelada__ ✓")		
+		await bot.send_message(username,"✓ __Subida actual cancelada__ ✓")
+		await callback_query.answer()
 	elif callback_query.data == "del":
 		await msg.delete()
 		await callback_query.answer()
