@@ -1814,9 +1814,9 @@ async def up_revistas_api(file,usid,msg,username):
 							upload_data["fileStage"] = "2"
 							if host.split(".")[0] == "https://revistas" or host.split(".")[0] == "https://tecedu":
 								if file.split('/')[-1].endswith(".pdf"):
-									upload_data["name[en_US]"] = file.split('/')[-1]
+									upload_data["name[es_ES]"] = file.split('/')[-1]
 								else:
-									upload_data["name[en_US]"] = file.split('/')[-1]+".pdf"
+									upload_data["name[es_ES]"] = file.split('/')[-1]+".pdf"
 							else:
 								upload_data["name[es_ES]"] = file.split('/')[-1]
 							if host.split(".")[0] == "https://revistas" or host.split(".")[0] == "https://tecedu":
