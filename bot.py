@@ -41,6 +41,7 @@ from zipfile import ZipFile
 from multivolumefile import MultiVolume
 from config import *
 import math
+import itertools
 import sys
 from unidecode import unidecode
 
@@ -521,9 +522,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la regu 5 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "UCIE":
-		if username != 'dev_sorcerer':
+		"""if username != 'dev_sorcerer':
 			await callback_query.answer("Dentro de poco ‼️")
-			return
+			return"""
 		USER[username]['zips'] = 19
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=UCIE)
 		await callback_query.answer()
@@ -776,10 +777,11 @@ async def start(client: Client, message: Message):
 	elif b.split(".")[0] == "https://apye":
 		rv = 'a'
 	elif b.split(".")[0] == "https://revistas":
-		rv = 'u'
-	elif b.split(".")[1] == "unica":
-		rv = 'uc'
-	elif b.split(".")[1] == "https://tecedu":
+		if b.split("/")[4] == "uciencia":
+			rv = 'uc'
+		else:
+			rv = 'u'	
+	elif b.split(".")[0] == "https://tecedu":
 		rv = 't'
 	elif b.split(".")[0] == "https://santiago":
 		rv = 's'
@@ -1589,7 +1591,7 @@ async def up(client: Client, message: Message):
 	   	await up_revistas_api(path,user_id,msg,username)
 	except Exception as ex:
 		task[username] = False
-		await message.reply(f"**ERROR**\n{ex}")
+		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
 		
 ##MENSAGED DE PROGRESO ⬆⬇
 def update_progress_up(inte,max):
@@ -1602,7 +1604,7 @@ def update_progress_up(inte,max):
 	percentage_pos = int(hashes / 1)
 	percentage_string = str(percentage) + "%"
 	
-	progress_bar = "**[" + progress_bar[:percentage_pos] + percentage_string + progress_bar[percentage_pos + len(percentage_string):] +"]**"
+	progress_bar = " **[" + progress_bar[:percentage_pos] + percentage_string + progress_bar[percentage_pos + len(percentage_string):] +"]**"
 	return(progress_bar)
 ###
 def update_progress_down(inte,max):
@@ -1656,15 +1658,21 @@ async def progress_down_tg(chunk,total,filename,start,message):
 	
 #Progreso de subida a la nube bar
 def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
+	clock_emojis = itertools.cycle(['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛'])
+	
 	now = time()
 	diff = now - start
 	mbs = chunk / diff
+	filename = filename.replace(".pdf","").strip()
+	partes = filename.split(".")
+	exten = ".".join(partes[-2:])
+	filename = filename[:14]+"(...)."+exten
 
 	msg = f"⏫ **𝕊𝕦𝕓𝕚𝕖𝕟𝕕𝕠 {numero} / {parts} 𝕡𝕒𝕣𝕥𝕖𝕤** ⏫\n\n"
 	try:
 		msg+=update_progress_up(chunk,filesize)+ " " + sizeof_fmt(mbs)+"/s\n\n"
 	except:pass
-	msg+= f"📤**•𝕌𝕡𝕝𝕠𝕒𝕕: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**\n🏷️**•ℕ𝕒𝕞𝕖:** `{filename}`\n"
+	msg+= f"🎒: `{filename}`\n**{next(clock_emojis)}: 0:00:00  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
 	global seg
 	if seg != localtime().tm_sec:
 		message.edit(msg,reply_markup=cancelar)
