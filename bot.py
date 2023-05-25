@@ -1621,7 +1621,7 @@ async def up(client: Client, message: Message):
 	   list = int(message.text.replace("_", " ").split()[1])	
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   lista = message.text.replace("_", " ").split(" ")
-	   if USER[username]['modo'] == 'm':
+	   if USER[username]['mode'] == 'm':
 	   	task[username]=True
 	   	await upload_moodle(path,msg,username)
 	   	return
