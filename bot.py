@@ -39,11 +39,12 @@ from py7zr import SevenZipFile
 from py7zr import FILTER_COPY
 from zipfile import ZipFile
 from multivolumefile import MultiVolume
-from config import *
+from botton import *
 import math
 import itertools
 import sys
 from unidecode import unidecode
+from moodle import aiohttp_client
 
 class Progress(BufferedReader):
     def __init__(self, filename, read_callback):
@@ -75,7 +76,7 @@ bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
 #'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' },
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = { 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'STGO':{'0001':'17680'},'REGU':{'r1': '3221'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '3322'  ,'r02': '3323'  ,'r03': '272'  ,'r04': '274'  ,'r05': '275' } ,'TECE':{'t1': '746'  ,'t2': '747'  ,'t3': '749'  ,'t4': '750'  ,'t5': '751' } ,'dev_sorcerer':{'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = {'proxy': False , 'gtm':'','vcl':'','ucc':'','ltu':'','uvs':'','uclv':'', 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'STGO':{'0001':'17680'},'REGU':{'r1': '3221'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '3322'  ,'r02': '3323'  ,'r03': '3324'  ,'r04': '3325'  ,'r05': '3326' } ,'TECE':{'t1': '746'  ,'t2': '748'  ,'t3': '749'  ,'t4': '750'  ,'t5': '751' } ,'dev_sorcerer':{'token':False,'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
 ROOT = {}
@@ -83,6 +84,7 @@ downlist={}#lista d archivos a descargar :D
 tarea_up = {}
 task = { 'dev_sorcerer': False}
 archivos = {}
+contador = 0
 ##Base de Datos##
 def update(username):
 	USER[username] = {'S':0 ,'D':0, 'auto': 'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'clienteuno','passw' : 'cLiente101*', 'up_id': '30693','mode' : 'n','zips' : 35}
@@ -227,13 +229,14 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=APYE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://apye.esceg.cu/index.php/apye/"
+		USER[username]['modo'] = 'n'
 		await send_config()
 	#APYE CALLBACK.data
 	elif callback_query.data == "1":
 		id = USER['APYE']['1']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clienteuno'
-		USER[username]['passw'] = '1cLiente01*'
+		USER[username]['passw'] = 'cLiente201*'
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 1 ✓")
 		await callback_query.answer()
@@ -241,7 +244,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		id = USER['APYE']['2']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientedos'
-		USER[username]['passw'] = '2cLiente02*'
+		USER[username]['passw'] = 'cLiente102*'
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 2 ✓")
 		await callback_query.answer()
@@ -318,158 +321,12 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 10 ✓")
 		await callback_query.answer()
-	elif callback_query.data == "EDIC":
-		if username != 'dev_sorcerer':
-			await callback_query.answer('Sitio desactivado ‼️')
-			return
-		USER[username]["zips"] = 20
-		USER[username]['host'] = "https://ediciones.uo.edu.cu/index.php/e1/"
-		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=EDIC)
-		await callback_query.answer()
-		await send_config()
-	#EDICiones CALLBACK.data
-	elif callback_query.data == "01":
-		id = USER['EDIC']['01']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clienteuno'
-		USER[username]['passw'] = 'Cliente01*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la edic. 1 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "02":
-		id = USER['EDIC']['02']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientedos'
-		USER[username]['passw'] = 'Cliente02*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la edic. 2 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "03":
-		id = USER['EDIC']['03']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientetres'
-		USER[username]['passw'] = 'Cliente03*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la edic. 3 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "04":
-		id = USER['EDIC']['04']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientecuatro'
-		USER[username]['passw'] = 'Cliente04*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la edic. 4 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "05":
-		id = USER['EDIC']['05']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientecinco'
-		USER[username]['passw'] = 'Cliente05*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la edic. 5 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "CINFO":
-		if username != 'dev_sorcerer':
-			await callback_query.answer('Sitio desactivado ‼️')
-			return
-		USER[username]["zips"] = 10
-		USER[username]['host'] = "http://cinfo.idict.cu/index.php/cinfo/"
-		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=CINFO)
-		await send_config()
-		await callback_query.answer()
-	#CINFO CALLBACK.data
-	elif callback_query.data == "001":
-		id = USER['CINFO']['001']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clienteuno'
-		USER[username]['passw'] = 'Cliente01*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la cinfo 1 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "002":
-		id = USER['CINFO']['002']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientedos'
-		USER[username]['passw'] = 'Cliente02*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la cinfo 2 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "003":
-		id = USER['CINFO']['003']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientetres'
-		USER[username]['passw'] = 'Cliente03*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la cinfo 3 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "004":
-		id = USER['CINFO']['004']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientecuatro'
-		USER[username]['passw'] = 'Cliente04*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la cinfo 4 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "005":
-		id = USER['CINFO']['005']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientecinco'
-		USER[username]['passw'] = 'Cliente05*'
-		await send_config()
-		await msg.edit("✓ Ok ahora subire a la cinfo 5 ✓")
-		await callback_query.answer()
-	elif callback_query.data == "EDUCA":
-		await callback_query.answer("EDUCA no disponible ‼️")
-	elif callback_query.data == "STGO":
-		if username != 'dev_sorcerer':
-			await callback_query.answer('Sitio desactivado ‼️')
-			return
-		USER[username]["zips"] = 50
-		USER[username]['host'] = "https://santiago.uo.edu.cu/index.php/stgo/"
-		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=STGO)
-		await send_config()
-		await callback_query.answer()
-	#CINFO CALLBACK.data
-	elif callback_query.data == "0001":
-		id = USER['STGO']['0001']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'jorgem5'
-		USER[username]['passw'] = 'julio8*'
-		await send_config()
-		await msg.edit("🤖 ℂ𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟 𝕕𝕖 𝕊𝕋𝔾𝕆 🤖",reply_markup=ZIPSTGO)
-		await callback_query.answer()
-	elif callback_query.data == "0002":
-		if username not in USER['VIP']:
-			await callback_query.answer("Cliente solo para premiums ‼️")
-			return
-		id = USER['STGO']['0002']
-		USER[username]['up_id'] = id
-		USER[username]['user'] = 'clientedos'
-		USER[username]['passw'] = 'Cliente02*'
-		await send_config()
-		await msg.edit("🤖 ℂ𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟 𝕕𝕖 𝕊𝕋𝔾𝕆 🤖",reply_markup=ZIPSTGO)
-	
-	elif callback_query.data == "z2":
-		USER[username]['zips'] = 20
-		await msg.edit("✓ Ok ahora subire a stgo ✓")
-		await send_config()
-	elif callback_query.data == "z3":
-		USER[username]['zips'] = 30
-		await msg.edit("✓ Ok ahora subire a stgo ✓")
-		await send_config()
-	elif callback_query.data == "z4":
-		USER[username]['zips'] = 40
-		await msg.edit("✓ Ok ahora subire a stgo ✓")
-		await send_config()
-	elif callback_query.data == "z5":
-		USER[username]['zips'] = 50
-		await msg.edit("✓ Ok ahora subire a stgo ✓")
-		await send_config()
 	elif callback_query.data == "REGU":
 		USER[username]['zips'] = 19
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=REGU)
 		await callback_query.answer()
 		USER[username]['host'] = "https://revistas.unica.cu/index.php/regu/"
+		USER[username]['modo'] = 'n'
 		await send_config()
 	#REGU CALLBACK.data
 	elif callback_query.data == "r1":
@@ -529,6 +386,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=UCIE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://revistas.unica.cu/index.php/uciencia/"
+		USER[username]['modo'] = 'n'
 		await send_config()
 	#UCIEN CALLBACK.data
 	elif callback_query.data == "r01":
@@ -585,6 +443,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=TECE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://tecedu.uho.edu.cu/index.php/tecedu/"
+		USER[username]['modo'] = 'n'
 		await send_config()
 	#TECE CALLBACK.data
 	elif callback_query.data == "t1":
@@ -636,6 +495,157 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la tece 5 ✓")
 		await callback_query.answer()
+	elif callback_query.data == "EDIC":
+		if username != 'dev_sorcerer':
+			await callback_query.answer('Sitio desactivado ‼️')
+			return
+		USER[username]["zips"] = 20
+		USER[username]['host'] = "https://ediciones.uo.edu.cu/index.php/e1/"
+		USER[username]['modo'] = 'n'
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=EDIC)
+		await callback_query.answer()
+		await send_config()
+	#EDICiones CALLBACK.data
+	elif callback_query.data == "01":
+		id = USER['EDIC']['01']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clienteuno'
+		USER[username]['passw'] = 'Cliente01*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la edic. 1 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "02":
+		id = USER['EDIC']['02']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientedos'
+		USER[username]['passw'] = 'Cliente02*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la edic. 2 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "03":
+		id = USER['EDIC']['03']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientetres'
+		USER[username]['passw'] = 'Cliente03*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la edic. 3 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "04":
+		id = USER['EDIC']['04']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecuatro'
+		USER[username]['passw'] = 'Cliente04*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la edic. 4 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "05":
+		id = USER['EDIC']['05']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecinco'
+		USER[username]['passw'] = 'Cliente05*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la edic. 5 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "CINFO":
+		if username != 'dev_sorcerer':
+			await callback_query.answer('Sitio desactivado ‼️')
+			return
+		USER[username]["zips"] = 10
+		USER[username]['host'] = "http://cinfo.idict.cu/index.php/cinfo/"
+		USER[username]['modo'] = 'n'
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=CINFO)
+		await send_config()
+		await callback_query.answer()
+	#CINFO CALLBACK.data
+	elif callback_query.data == "001":
+		id = USER['CINFO']['001']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clienteuno'
+		USER[username]['passw'] = 'Cliente01*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la cinfo 1 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "002":
+		id = USER['CINFO']['002']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientedos'
+		USER[username]['passw'] = 'Cliente02*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la cinfo 2 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "003":
+		id = USER['CINFO']['003']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientetres'
+		USER[username]['passw'] = 'Cliente03*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la cinfo 3 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "004":
+		id = USER['CINFO']['004']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecuatro'
+		USER[username]['passw'] = 'Cliente04*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la cinfo 4 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "005":
+		id = USER['CINFO']['005']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientecinco'
+		USER[username]['passw'] = 'Cliente05*'
+		await send_config()
+		await msg.edit("✓ Ok ahora subire a la cinfo 5 ✓")
+		await callback_query.answer()
+	elif callback_query.data == "EDUCA":
+		await callback_query.answer("EDUCA no disponible ‼️")
+	elif callback_query.data == "STGO":
+		if username != 'dev_sorcerer':
+			await callback_query.answer('Sitio desactivado ‼️')
+			return
+		USER[username]["zips"] = 50
+		USER[username]['host'] = "https://santiago.uo.edu.cu/index.php/stgo/"
+		USER[username]['modo'] = 'n'
+		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=STGO)
+		await send_config()
+		await callback_query.answer()
+	#CINFO CALLBACK.data
+	elif callback_query.data == "0001":
+		id = USER['STGO']['0001']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'jorgem5'
+		USER[username]['passw'] = 'julio8*'
+		await send_config()
+		await msg.edit("🤖 ℂ𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟 𝕕𝕖 𝕊𝕋𝔾𝕆 🤖",reply_markup=ZIPSTGO)
+		await callback_query.answer()
+	elif callback_query.data == "0002":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
+		id = USER['STGO']['0002']
+		USER[username]['up_id'] = id
+		USER[username]['user'] = 'clientedos'
+		USER[username]['passw'] = 'Cliente02*'
+		await send_config()
+		await msg.edit("🤖 ℂ𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟 𝕕𝕖 𝕊𝕋𝔾𝕆 🤖",reply_markup=ZIPSTGO)
+	
+	elif callback_query.data == "z2":
+		USER[username]['zips'] = 20
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
+		await send_config()
+	elif callback_query.data == "z3":
+		USER[username]['zips'] = 30
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
+		await send_config()
+	elif callback_query.data == "z4":
+		USER[username]['zips'] = 40
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
+		await send_config()
+	elif callback_query.data == "z5":
+		USER[username]['zips'] = 50
+		await msg.edit("✓ Ok ahora subire a stgo ✓")
+		await send_config()
+	
 		"""USER[username]['host'] = 'educa'
 		USER[username]['zips'] = 2
 		await send_config()
@@ -661,17 +671,44 @@ async def status_users(client:Client, message:Message):
 			down += USER[i]['D']
 
 			info += f"Ʉ$Ʉ₳ɌƗØ: **@{i}**\n𝔻𝕖𝕤𝕔𝕒𝕣𝕘𝕒𝕕𝕠: **{D}**\n𝕊𝕦𝕓𝕚𝕕𝕠: **{S}**\n\n"
-			cont+=1
+			users+=1
 		except:
 			continue
 	msg +=f"🅤🅢🅐🅤🅡🅘🅞🅢: **{users}**\n🅄🄿🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(up)}**\n🄳🄾🅆🄽🄻🄾🄰🄳🄴🄳: **{sizeof_fmt(down)}**\n\n"
 	await message.reply(msg+info)
 	
-	
+@bot.on_message(filters.command("gtm", prefixes="/") & filters.private)
+async def aula_gtm(client:Client, message:Message):
+		user = message.from_user.username
+		if user not in USER:
+			return
+		else:pass
+		USER[user]['host'] = 'https://aulauvs.gtm.sld.cu/'
+		USER[user]['zips'] = 7
+		USER[user]['modo'] = 'm'
+		USER[username]['token'] = USER['gtm']
+		await send_config()
+		await message.reply("✓ __Ok, GTM equipada__ ✓")
+
+@bot.on_message(filters.command("token", prefixes="/") & filters.private)
+async def token_global(client:Client, message:Message):
+		user = message.from_user.username
+		if user not in BOSS:
+						return
+		else:pass
+		msg = message.text.split(" ")
+		if msg[1] not in USER:
+			await message.reply("Error las nubes son:\ngtm\nEjemplo de uso: `/token gtm TOKEN`")
+			return
+		else:pass
+		USER[msg[1]] = msg[2]
+		await send_config()
+		await message.reply(f"✓ __Ok, nuevo token de {msg[1]} equipado__ ✓")
+						
 @bot.on_message(filters.command("status", prefixes="/"))
 async def status(client:Client, message:Message):
 	user = message.from_user.username
-	if user != 'dev_sorcerer':
+	if user != 'dev_sorcerer' or user != 'Comillas_San':
 				return
 	else:pass
 	modo = USER['modo']
@@ -680,6 +717,9 @@ async def status(client:Client, message:Message):
 				await message.reply("**✓ Status: OFF ✓**")
 				await send_config()
 	else:
+				if user == 'Comillas_San':
+					await message.reply("Ok gracias onee-chan no hace falta que me apagues :)")
+					return
 				USER['modo']='on'
 				await message.reply("**✓ Status: ON ✓**")
 				await send_config()
@@ -772,6 +812,10 @@ async def start(client: Client, message: Message):
 	b = USER[username]['host']
 	if b.split(".")[0] == "http://cinfo":
 		rv = 'c'
+	elif b.split(".")[0] == "https://aulauvs":
+		rv = 'gtm'
+	elif b.split(".")[0] == "https://posgrado":
+		rv = 'unica'
 	elif b.split(".")[0] == "https://ediciones":
 		rv = 'ed'
 	elif b.split(".")[0] == "https://apye":
@@ -800,6 +844,10 @@ async def start(client: Client, message: Message):
 		msg+="☆ ℍ𝕠𝕤𝕥: **apye** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv == "ed":
 		msg+="☆ ℍ𝕠𝕤𝕥: **ediciones** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
+	elif rv == "gtm":
+		msg+="☆ ℍ𝕠𝕤𝕥: **GTM** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓"
+	elif rv == "unica":
+		msg+="☆ ℍ𝕠𝕤𝕥: **UNICA** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓"
 	elif rv == "c":
 		msg+="☆ ℍ𝕠𝕤𝕥: **cinfo** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv == "u":
@@ -1570,7 +1618,14 @@ async def up(client: Client, message: Message):
 	try:
 	   msg = await message.reply("ℙ𝕣𝕖𝕡𝕒𝕣𝕒𝕟𝕕𝕠 𝕤𝕦𝕓𝕚𝕕𝕒...")
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
+	   list = int(message.text.replace("_", " ").split()[1])	
+	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
 	   lista = message.text.replace("_", " ").split(" ")
+	   if USER[username]['modo'] == 'm':
+	   	task[username]=True
+	   	await upload_token(path,msg,username)
+	   	return
+	   	
 	   if "-" in lista[1]:
 	   	actual = lista[1]
 	   	v1 = int(actual.split("-")[-2])
@@ -1581,8 +1636,7 @@ async def up(client: Client, message: Message):
 	   		path = str(ROOT[username]["actual_root"]+"/")+msgh[1][i]
 	   		await up_revistas_api(path,user_id,msg,username)
 	   	return
-	   list = int(message.text.replace("_", " ").split()[1])	
-	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
+	   
 	   if USER[username]['host'] == 'educa':
 	   	await message.reply("**EDUCA** __se encuentra en mantenimiento, notifique si no es asi!__")
 	   	return
@@ -1655,24 +1709,29 @@ async def progress_down_tg(chunk,total,filename,start,message):
 		try: await message.edit(msg)
 		except:pass
 	seg = localtime().tm_sec
-	
+
 #Progreso de subida a la nube bar
 def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
-	clock_emojis = itertools.cycle(['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛'])
-	
+	global contador
+	contador+=1
+	clock_emojis = ['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛']
+	clock_emojis = clock_emojis[contador-1:] + [clock_emojis[0]]
 	now = time()
 	diff = now - start
 	mbs = chunk / diff
 	filename = filename.replace(".pdf","").strip()
 	partes = filename.split(".")
 	exten = ".".join(partes[-2:])
-	filename = filename[:14]+"(...)."+exten
+	if len(filename)<=14:
+		filename+=exten
+	else:
+		filename = filename[:14]+"(...)."+exten
 
 	msg = f"⏫ **𝕊𝕦𝕓𝕚𝕖𝕟𝕕𝕠 {numero} / {parts} 𝕡𝕒𝕣𝕥𝕖𝕤** ⏫\n\n"
 	try:
 		msg+=update_progress_up(chunk,filesize)+ " " + sizeof_fmt(mbs)+"/s\n\n"
 	except:pass
-	msg+= f"🎒: `{filename}`\n**{next(clock_emojis)}: 0:00:00  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
+	msg+= f"🎒: `{filename}`\n**{clock_emojis[0]}: 0:00:00  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
 	global seg
 	if seg != localtime().tm_sec:
 		message.edit(msg,reply_markup=cancelar)
@@ -1680,6 +1739,8 @@ def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 
 #Subida a la revistas :)
 async def up_revistas_api(file,usid,msg,username):
+	global contador
+	contador = 0
 	try:
 		host=USER[username]["host"]
 		user=USER[username]['user']
@@ -1699,8 +1760,7 @@ async def up_revistas_api(file,usid,msg,username):
 			try:
 				connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
 			except Exception as ex:
-				await message.reply(f"{ex}")
-				connector = aiohttp.TCPConnector()
+				await msg.edit(f"**{ex}**")
 		else:
 			connector = aiohttp.TCPConnector()
 		async with aiohttp.ClientSession(connector=connector) as session:
@@ -1866,6 +1926,116 @@ async def up_revistas_api(file,usid,msg,username):
 		await msg.edit("𝔼𝕣𝕣𝕠𝕣‼️ ℙ𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕢𝕦𝕖 𝕝𝕒. 𝕣𝕖𝕧𝕚𝕤𝕥𝕒 𝕖𝕤𝕥𝕖 𝕔𝕠𝕞𝕡𝕝𝕖𝕥𝕒𝕞𝕖𝕟𝕥𝕖 𝕝𝕝𝕖𝕟𝕒, 𝕖𝕤𝕡𝕖𝕣𝕖 𝕠 𝕦𝕥𝕚𝕝𝕚𝕫𝕖 𝕠𝕥𝕣𝕠 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 𝕕𝕚𝕤𝕡𝕠𝕟𝕚𝕓𝕝𝕖: **/rv**")
 		task[username]=False
 
+#Subida a moodles
+async def upload_moodle(file,msg,username):
+		global contador 
+		contador = 0
+		try:
+			zipssize=USER[username]['zips']*1024*1024
+			filename = file.split("/")[-1]
+			filesize = Path(file).stat().st_size
+			print(21)
+			proxy = USER['proxy']
+			#headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0'}
+		#login
+			msg = await msg.edit("💫 **Preparando subida...**")		
+			if proxy != False:
+				try:
+					connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
+				except:
+					if USER[username]['proxy'] == False:
+						await msg.edit("Error a la hora de conectar con el proxy!!!")
+						return
+					else:
+						try:
+							connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
+						except:
+							await msg.edit("Error a la hora de conectar con tu proxy privado!!!")
+							return
+			else:
+					connector = aiohttp.TCPConnector()			
+					
+			if filesize-1048>zipssize:
+					parts = math.ceil(filesize / zipssize)
+					await msg.edit(f"┏━━━━• **❅Preparando❅** •━━━━┓\n🧩 𝕋𝕠𝕥𝕒𝕝: **{parts} partes** a 丂凵乃丨尺\n┗━━━━•**❅🔩{USER[username]['zips']}MiB🔩❅**•━━━━┛")
+					files = await sevenzip(file,volume=zipssize)
+					await bot.pin_chat_message(username,msg.id, disable_notification=True,both_sides=True)
+					subido = 0
+					numero = 0
+					async with aiohttp.ClientSession(connector=connector,headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.182 Safari/537.36'}) as session:
+						token = USER[username]['token'] 
+						user = USER[username]['user']
+						passw = USER[username]['passw']
+						repo = USER[username]['up_id']
+						host = USER[username]['host']
+						links = []
+						client = aiohttp_client(host,user,passw,repo,session)
+						if token != False:
+							for file in files:
+								numero+=1
+								r = await client.upload_file_token(file,token,read_callback=lambda current,total,start: uploadfile_progres(current,total,start,file.split("/")[-1],msg,parts,numero))
+								if r:
+									ws = r.replace("pluginfile.php","webservice/pluginfile.php")
+									link =  ws+f"?token={token}"
+									links.append(link)
+									subido+=1
+									upsize = Path(file).stat().st_size
+									USER[username]['S'] = upsize
+									await send_config()
+								else:
+									await bot.send_message(username,f"👾**F:** `{file.split('/')[-1]}`")
+						else:
+							for file in files:
+								numero+=1
+								login = await client.login()
+								if not login:
+									await msg.edit("Error a la hora del inicio de sesion!!!")
+									return
+								r = await client.upload_file_draft(file,read_callback=lambda current,total,start: uploadfile_progres(current,total,start,file.split("/")[-1],msg,parts,numero))						
+								if r:
+									links.append(r)
+									subido+=1
+									upsize = Path(file).stat().st_size
+									USER[username]['S'] = upsize
+									await send_config()
+								else:
+									await bot.send_message(username,f"👾**F:** `{file.split('/')[-1]}`")								
+								
+						await bot.unpin_chat_message(username,msg.id)
+						await msg.delete()
+						await bot.send_message(username,f"💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️")
+						task[username] = False
+						if int(subido)>0:
+							txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
+							with open(txtname,"w") as t:
+								message = ""
+								for li in links:
+									message+=li+"\n"
+								t.write(message)
+								t.close()
+							if token == False:
+								pin = await bot.send_document(username,txtname,caption=f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀\nℍ𝕠𝕤𝕥: {host}login\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`", thumb='thumb.jpg')
+								task[username]=False
+								await bot.pin_chat_message(username,pin.id, disable_notification=True,both_sides=True)
+							else:
+								pin = await bot.send_document(username,txtname,caption=f"**🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀**\n **ℙ𝕠𝕨𝕖𝕣 𝕓𝕪 @maxUpload**", thumb='thumb.jpg')
+								task[username]=False
+								await bot.pin_chat_message(username,pin.id, disable_notification=True,both_sides=True)
+							os.unlink(txtname)
+							if token != False:
+									await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
+							else:
+								await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n#{username} #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
+								
+								
+			##FINISH, SUBIDA DE BASTANTES PARTS
+			else:pass #AQUI CIDNO SUBE SIN COMPRIMIR
+					
+					
+		except Exception as ex:
+				task[username]=False
+				await bot.send_message(username,f"{ex}")
+				
 #ConvertBytes=>>
 def sizeof_fmt(num, suffix='B'):
     for unit in ['', 'Ki', 'Mi', 'Gi', 'Ti', 'Pi', 'Ei', 'Zi']:
