@@ -1623,7 +1623,7 @@ async def up(client: Client, message: Message):
 	   lista = message.text.replace("_", " ").split(" ")
 	   if USER[username]['modo'] == 'm':
 	   	task[username]=True
-	   	await upload_token(path,msg,username)
+	   	await upload_moodle(path,msg,username)
 	   	return
 	   	
 	   if "-" in lista[1]:
@@ -1646,6 +1646,7 @@ async def up(client: Client, message: Message):
 	except Exception as ex:
 		task[username] = False
 		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
+		await bot.send_message(username,f"{ex}")
 		
 ##MENSAGED DE PROGRESO ⬆⬇
 def update_progress_up(inte,max):
