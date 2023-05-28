@@ -74,20 +74,19 @@ CHANNEL = -1001555187910
 
 bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
-#'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, 'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' },
+#'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, ,
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = {'proxy': False , 'gtm':'','vcl':'','ucc':'','ltu':'','uvs':'','uclv':'', 'modo': 'on', 'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'STGO':{'0001':'17680'},'REGU':{'r1': '3221'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '3322'  ,'r02': '3323'  ,'r03': '3324'  ,'r04': '3325'  ,'r05': '3326' } ,'TECE':{'t1': '746'  ,'t2': '748'  ,'t3': '749'  ,'t4': '750'  ,'t5': '751' } ,'dev_sorcerer':{'token':False,'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = {'modo': 'on','proxy': False , 'gtm':'1e823bb5ec5b61f517bea67d6421b616','vcl':'d07578f77ea03f742c5740f51435115b','ucc':'17fd2680b31b9cdda640c0819ec4cf6a','ltu':'','uvs':'','uclv':'', 'uni':'62acaa74a8340f9f6af3f9c086482a61' ,'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'STGO':{'0001':'17680'},'REGU':{'r1': '3359'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '3322'  ,'r02': '3323'  ,'r03': '3324'  ,'r04': '3325'  ,'r05': '3326' } ,'TECE':{'t1': '791'  ,'t2': '748'  ,'t3': '749'  ,'t4': '750'  ,'t5': '751' } ,'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' }, 'dev_sorcerer':{'token':False,'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
-ROOT = {}
+ROOT = {}#Localizacion actual
 downlist={}#lista d archivos a descargar :D
-tarea_up = {}
-task = { 'dev_sorcerer': False}
-archivos = {}
-contador = 0
+task = { 'dev_sorcerer': False}#Mant un procces
+archivos = {}#Limite de renvios
+filesRev = { 'dev_sorcerer':[] }#Archivos en revistas
 ##Base de Datos##
 def update(username):
-	USER[username] = {'S':0 ,'D':0, 'auto': 'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'clienteuno','passw' : 'cLiente101*', 'up_id': '30693','mode' : 'n','zips' : 35}
+	USER[username] = {'token':False ,'S':0 ,'D':0, 'auto': 'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'clienteuno','passw' : 'cLiente101*', 'up_id': '30693','mode' : 'n','zips' : 35}
 async def get_messages():
 	msg = await bot.get_messages(CHANNEL,message_ids=db_access)
 	USER.update(loads(msg.text))
@@ -169,7 +168,7 @@ async def carga_tg(client: Client, message: Message):
 					filename = "Unknown!!!"+str(randint(00,99))+".mp4"
 		else:
 			try:
-				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"").replace('/','')
+				filename = str(i).split('"file_name": ')[1].split(",")[0].replace('"',"").replace('/',' ')
 				filename = unidecode(filename)
 			except:
 				filename = "Unknown!!!"+str(randint(00,99))+".mp4"
@@ -236,7 +235,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		id = USER['APYE']['1']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clienteuno'
-		USER[username]['passw'] = 'cLiente201*'
+		USER[username]['passw'] = '1cLiente01*'
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 1 ✓")
 		await callback_query.answer()
@@ -244,7 +243,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		id = USER['APYE']['2']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientedos'
-		USER[username]['passw'] = 'cLiente102*'
+		USER[username]['passw'] = '2cLiente02*'
 		await send_config()
 		await msg.edit("✓ Ok ahora subire a la apye 2 ✓")
 		await callback_query.answer()
@@ -547,9 +546,6 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la edic. 5 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "CINFO":
-		if username != 'dev_sorcerer':
-			await callback_query.answer('Sitio desactivado ‼️')
-			return
 		USER[username]["zips"] = 10
 		USER[username]['host'] = "http://cinfo.idict.cu/index.php/cinfo/"
 		USER[username]['modo'] = 'n'
@@ -686,7 +682,7 @@ async def aula_gtm(client:Client, message:Message):
 		USER[user]['host'] = 'https://aulauvs.gtm.sld.cu/'
 		USER[user]['zips'] = 7
 		USER[user]['modo'] = 'm'
-		USER[username]['token'] = USER['gtm']
+		USER[user]['token'] = USER['gtm']
 		await send_config()
 		await message.reply("✓ __Ok, GTM equipada__ ✓")
 
@@ -1620,13 +1616,9 @@ async def up(client: Client, message: Message):
 	   msgh = files_formatter(str(ROOT[username]["actual_root"]),username)
 	   list = int(message.text.replace("_", " ").split()[1])	
 	   path = str(ROOT[username]["actual_root"]+"/")+msgh[1][list]
-	   lista = message.text.replace("_", " ").split(" ")
-	   if USER[username]['mode'] == 'm':
-	   	task[username]=True
-	   	await upload_moodle(path,msg,username)
-	   	return
-	   	
-	   if "-" in lista[1]:
+	   
+	   #lista = message.text.replace("_", " ").split(" ")	   	
+	   """if "-" in lista[1]:
 	   	actual = lista[1]
 	   	v1 = int(actual.split("-")[-2])
 	   	v2 = int(actual.split("-")[-1])
@@ -1635,11 +1627,12 @@ async def up(client: Client, message: Message):
 	   		y += v2+1
 	   		path = str(ROOT[username]["actual_root"]+"/")+msgh[1][i]
 	   		await up_revistas_api(path,user_id,msg,username)
-	   	return
+	   	return"""
 	   
-	   if USER[username]['host'] == 'educa':
-	   	await message.reply("**EDUCA** __se encuentra en mantenimiento, notifique si no es asi!__")
-	   	return
+	   if USER[username]['mode'] == 'm':
+	   	task[username]=True
+	   	await upload_moodle(path,msg,username)
+	   	
 	   else:
 	   	task[username] = True
 	   	await up_revistas_api(path,user_id,msg,username)
@@ -1659,7 +1652,7 @@ def update_progress_up(inte,max):
 	percentage_pos = int(hashes / 1)
 	percentage_string = str(percentage) + "%"
 	
-	progress_bar = " **[" + progress_bar[:percentage_pos] + percentage_string + progress_bar[percentage_pos + len(percentage_string):] +"]**"
+	progress_bar = "**[" + progress_bar[:percentage_pos] + percentage_string + progress_bar[percentage_pos + len(percentage_string):] +"]**"
 	return(progress_bar)
 ###
 def update_progress_down(inte,max):
@@ -1714,16 +1707,16 @@ async def progress_down_tg(chunk,total,filename,start,message):
 #Progreso de subida a la nube bar
 def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 	global contador
-	contador+=1
+
 	clock_emojis = ['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛']
-	clock_emojis = clock_emojis[contador-1:] + [clock_emojis[0]]
+	clock_emojis = clock_emojis[parts:] + [clock_emojis[0]]
 	now = time()
 	diff = now - start
 	mbs = chunk / diff
 	filename = filename.replace(".pdf","").strip()
 	partes = filename.split(".")
 	exten = ".".join(partes[-2:])
-	if len(filename)<=14:
+	if len(filename)<=14 or not '.7z' in filename:
 		filename+=exten
 	else:
 		filename = filename[:14]+"(...)."+exten
@@ -1940,7 +1933,7 @@ async def upload_moodle(file,msg,username):
 			#headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0'}
 		#login
 			msg = await msg.edit("💫 **Preparando subida...**")		
-			if proxy != False:
+			"""if proxy != False:
 				try:
 					connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
 				except:
@@ -1954,8 +1947,9 @@ async def upload_moodle(file,msg,username):
 							await msg.edit("Error a la hora de conectar con tu proxy privado!!!")
 							return
 			else:
-					connector = aiohttp.TCPConnector()			
-					
+					connector = aiohttp.TCPConnector()"""
+			
+			connector = aiohttp.TCPConnector()					
 			if filesize-1048>zipssize:
 					parts = math.ceil(filesize / zipssize)
 					await msg.edit(f"┏━━━━• **❅Preparando❅** •━━━━┓\n🧩 𝕋𝕠𝕥𝕒𝕝: **{parts} partes** a 丂凵乃丨尺\n┗━━━━•**❅🔩{USER[username]['zips']}MiB🔩❅**•━━━━┛")
