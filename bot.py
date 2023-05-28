@@ -681,7 +681,7 @@ async def aula_gtm(client:Client, message:Message):
 		else:pass
 		USER[user]['host'] = 'https://aulauvs.gtm.sld.cu/'
 		USER[user]['zips'] = 7
-		USER[user]['modo'] = 'm'
+		USER[user]['mode'] = 'm'
 		USER[user]['token'] = USER['gtm']
 		await send_config()
 		await message.reply("✓ __Ok, GTM equipada__ ✓")
@@ -726,6 +726,8 @@ async def rev(client:Client, message:Message):
 	if user not in USER:
 		return
 	else:pass
+	USER[user]['mode'] = 'n'
+	await send_config()
 	await message.reply("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕙𝕠𝕤𝕥 𝕒 𝕤𝕦𝕓𝕚𝕣 🚀",reply_markup=MENU)
 
 #Configurar rev privada
@@ -1922,8 +1924,6 @@ async def up_revistas_api(file,usid,msg,username):
 
 #Subida a moodles
 async def upload_moodle(file,msg,username):
-		global contador 
-		contador = 0
 		try:
 			zipssize=USER[username]['zips']*1024*1024
 			filename = file.split("/")[-1]
