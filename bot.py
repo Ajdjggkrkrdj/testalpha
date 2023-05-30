@@ -76,7 +76,7 @@ bot = Client("maxup",api_id=API_ID,api_hash=API_HASH,bot_token=TOKEN)
 
 #'EDIC':{'01': '268'  ,'02': '270'  ,'03': '272'  ,'04': '274'  ,'05': '275' }, ,
 BOSS = ['dev_sorcerer']#usuarios supremos
-USER = {'modo': 'on','proxy': False , 'gtm':'1e823bb5ec5b61f517bea67d6421b616','vcl':'d07578f77ea03f742c5740f51435115b','ucc':'17fd2680b31b9cdda640c0819ec4cf6a','ltu':'','uvs':'','uclv':'', 'uni':'62acaa74a8340f9f6af3f9c086482a61' ,'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'STGO':{'0001':'17680'},'REGU':{'r1': '3359'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '3322'  ,'r02': '3323'  ,'r03': '3324'  ,'r04': '3325'  ,'r05': '3326' } ,'TECE':{'t1': '791'  ,'t2': '748'  ,'t3': '749'  ,'t4': '750'  ,'t5': '751' } ,'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' }, 'dev_sorcerer':{'token':False,'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
+USER = {'modo': 'on','proxy': False , 'gtm':'1e823bb5ec5b61f517bea67d6421b616','vcl':'d07578f77ea03f742c5740f51435115b','ucc':'17fd2680b31b9cdda640c0819ec4cf6a','ltu':'','uvs':'','uclv':'', 'uni':'62acaa74a8340f9f6af3f9c086482a61' ,'VIP':['dev_sorcerer'], 'APYE': { '1': '30693', '2': '30694', '3': '29534', '4': '29535', '5': '29536', '6': '29537', '7': '29538', '8': '29539', '9': '29540', '10': '29541'},'STGO':{'0001':'17680'},'REGU':{'r1': '3371'  ,'r2': '3222'  ,'r3': '3223'  ,'r4': '3224'  ,'r5': '3225' },'UCIE':{'r01': '3322'  ,'r02': '3323'  ,'r03': '3324'  ,'r04': '3325'  ,'r05': '3326' } ,'TECE':{'t1': '799'  ,'t2': '800'  ,'t3': '749'  ,'t4': '750'  ,'t5': '751' } ,'CINFO':{'001': '313'  ,'002': '314'  ,'003': '319'  ,'004': '320'  ,'005': '321' }, 'dev_sorcerer':{'token':False,'S': 0, 'D':0, 'auto':'n', 'proxy': False, 'host': 'https://apye.esceg.cu/index.php/apye/','user': 'cliente','passw' : '1cLiente01*','up_id': '30693','mode' : 'n','zips' : 35}
 }#usuarios premitidos en el bot 
 
 ROOT = {}#Localizacion actual
@@ -852,9 +852,19 @@ async def start(client: Client, message: Message):
 	elif rv == "ed":
 		msg+="☆ ℍ𝕠𝕤𝕥: **ediciones** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv == "gtm":
-		msg+="☆ ℍ𝕠𝕤𝕥: **GTM** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓"
+		msg+="☆ ℍ𝕠𝕤𝕥: **GTM** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
+	elif rv == "uni":
+		msg+="☆ ℍ𝕠𝕤𝕥: **UNISS** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
 	elif rv == "unica":
-		msg+="☆ ℍ𝕠𝕤𝕥: **UNICA** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓"
+		msg+="☆ ℍ𝕠𝕤𝕥: **UNICA** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
+	elif rv == "vcl":
+		msg+="☆ ℍ𝕠𝕤𝕥: **VCL** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
+	elif rv == "ucc":
+		msg+="☆ ℍ𝕠𝕤𝕥: **UCCFD** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
+	elif rv == "uclv":
+		msg+="☆ ℍ𝕠𝕤𝕥: **UCLV** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
+	elif rv == "uvs":
+		msg+="☆ ℍ𝕠𝕤𝕥: **UVS** ✓ 𝕸𝖔𝖔𝖉𝖑𝖊 ✓\n"
 	elif rv == "c":
 		msg+="☆ ℍ𝕠𝕤𝕥: **cinfo** ✓𝕽𝖊𝖛𝖎𝖘𝖙𝖆✓\n"
 	elif rv == "u":
@@ -1608,15 +1618,16 @@ async def down_link(client: Client, message: Message):
              	task[username] = False
              	await msg.edit(f"ERROR\n{ex}")
  
-@bot.on_message(filters.regex("/deleteFile") & filters.private)
+@bot.on_message(filters.command("delete", prefixes="/") & filters.private)
 async def delRev(client: Client, message: Message):
 	username = message.from_user.username
 	msg = await message.reply("Tratando de borrar...")
-	await deleteFile(username,msg)
+	smsg = message.text.split(" ")
+	await deleteFile(smsg[1], smsg[2], smsg[3],smsg[4], smsg[5], msg, username)
 	
 ###	
-async def deleteFile(username,msg):
-    host = 'https://revistas.unica.cu/index.php/regu/'
+async def deleteFile(host, fileID, id, user, passw, msg, username):
+
     connector = aiohttp.TCPConnector()
     async with aiohttp.ClientSession(connector=connector) as session:
     	async with session.get(host + "login") as response:
@@ -1627,8 +1638,8 @@ async def deleteFile(username,msg):
     	payload = {}
     	payload['csrfToken'] = csrfToken
     	payload['source'] = ''
-    	payload['username'] = 'clienteuno'
-    	payload['password'] = 'C1i3nte01*'
+    	payload['username'] = user
+    	payload['password'] = passw
     	payload['remember'] = '1'
     	async with session.post(url_post, data=payload) as e:
     		print(222)
@@ -1641,19 +1652,18 @@ async def deleteFile(username,msg):
     		if u==host+'login/signIn':
     			await msg.edit("❌ **ERROR** ❌\nℂ𝕣𝕖𝕕𝕖𝕟𝕔𝕚𝕒𝕝𝕖𝕤 𝕚𝕟𝕔𝕠𝕣𝕣𝕖𝕔𝕥𝕒𝕤, 𝕡𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕥𝕒𝕞𝕓𝕚𝕖́𝕟 𝕒𝕝𝕘𝕦𝕟𝕒 𝕔𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟...𝕠 𝕝𝕒 𝕟𝕦𝕓𝕖 𝕖𝕤𝕥𝕒́ 𝕔𝕒𝕚́𝕕𝕒/𝕓𝕒𝕟𝕟𝕖𝕒𝕕𝕒. 😐")
     			task[username]=False
+    			return
     		else:
-    			url = f"{host}/api/v1/submissions/3368/files/136489?stageId=1"
+    			url = f"{host}/api/v1/submissions/{id}/files/{fileID}?stageId=1"
     			headers = {
         'x-csrf-token': csrfToken,
         'x-http-method-override': 'DELETE'
     }
     			async with session.post(url, headers=headers) as response:
     			     if response.status == 200:
-    			     	return msg.edit("✓ Eureca ✓")
-    			     	task[username] = False
+    			     	return await msg.edit("✓ Eureca ✓")
     			     else:
-    			     	return msg.edit("Nou...")
-    			     	task[username] = False  	
+    			     	return await msg.edit("Nou...")
              	            	            	
 #Comamdo /up subida
 @bot.on_message(filters.regex("/up") & filters.private)
@@ -1697,7 +1707,7 @@ async def up(client: Client, message: Message):
 	except Exception as ex:
 		task[username] = False
 		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
-		await bot.send_message(username,f"{ex}")
+		#await bot.send_message(username,f"{ex}")
 		
 ##MENSAGED DE PROGRESO ⬆⬇
 def update_progress_up(inte,max):
@@ -1764,13 +1774,17 @@ async def progress_down_tg(chunk,total,filename,start,message):
 
 #Progreso de subida a la nube bar
 def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
-	global contador
 
-	clock_emojis = ['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛']
-	clock_emojis = clock_emojis[parts:] + [clock_emojis[0]]
+	clock_emojis = itertools.cycle(['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛'])
+	
 	now = time()
 	diff = now - start
 	mbs = chunk / diff
+	time_remaining = (filesize - chunk) / mbs
+	hours, rem = divmod(time_remaining, 3600)
+	minutes, seconds = divmod(rem, 60)
+	time_str = f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}"
+	
 	filename = filename.replace(".pdf","").strip()
 	partes = filename.split(".")
 	exten = ".".join(partes[-2:])
@@ -1783,7 +1797,8 @@ def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 	try:
 		msg+=update_progress_up(chunk,filesize)+ " " + sizeof_fmt(mbs)+"/s\n\n"
 	except:pass
-	msg+= f"🎒: `{filename}`\n**{clock_emojis[0]}: 0:00:00  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
+	emojis = next(clock_emojis)
+	msg+= f"🎒: `{filename}`\n**{emojis}: {time_str}  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
 	global seg
 	if seg != localtime().tm_sec:
 		message.edit(msg,reply_markup=cancelar)
@@ -1898,6 +1913,7 @@ async def up_revistas_api(file,usid,msg,username):
 											except:
 												upsize = Path(filenow).stat().st_size
 											USER[username]['S']+=upsize
+											unlink(file)
 											await send_config()
 										else:
 											await bot.send_message(usid,f"👾**F:** `{file.split('/')[-1]}`")
@@ -1962,9 +1978,12 @@ async def up_revistas_api(file,usid,msg,username):
 								text = await resp.text()
 								if '_href' in text:
 									parse = str(text).replace('\/','/')
-									url = str(parse).split('url":"')[1].split('"')[0]
-									await msg.edit(f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀 \n«/» **[{file.split('/')[-1]}]({url})**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login",disable_web_page_preview=True)
-									await bot.send_message(Channel_Id,f"#enalce subido x **@{username}**\n«/» **[{file.split('/')[-1]}]({url})**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login",disable_web_page_preview=True)
+									urll = str(parse).split('url":"')[1].split('"')[0]
+									LINK = InlineKeyboardMarkup([
+    [InlineKeyboardButton('🔗 ⱠƗ₦Ԟ 🔗', url=f'{urll}')]
+])
+									await msg.edit(f"🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀 \n«/» **[{file.split('/')[-1]}]({urll})** «/»\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login",disable_web_page_preview=True,reply_markup=LINK)
+									await bot.send_message(Channel_Id,f"#enalce subido x **@{username}**\n«/» **[{file.split('/')[-1]}]({urll})** «/»\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login",disable_web_page_preview=True,reply_markup=LINK)
 									task[username]=False
 									USER[username]['S']+=filesize
 									await send_config()
@@ -1972,7 +1991,7 @@ async def up_revistas_api(file,usid,msg,username):
 									await msg.edit(f"👾**F:** `{file.split('/')[-1]}`")
 									task[username]=False
 	except Exception as ex:
-		await bot.send_message(BOSS,str(ex))
+		await bot.send_message(BOSS,f"{ex}")
 		print(str(ex))
 		await msg.edit("𝔼𝕣𝕣𝕠𝕣‼️ ℙ𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕢𝕦𝕖 𝕝𝕒. 𝕣𝕖𝕧𝕚𝕤𝕥𝕒 𝕖𝕤𝕥𝕖 𝕔𝕠𝕞𝕡𝕝𝕖𝕥𝕒𝕞𝕖𝕟𝕥𝕖 𝕝𝕝𝕖𝕟𝕒, 𝕖𝕤𝕡𝕖𝕣𝕖 𝕠 𝕦𝕥𝕚𝕝𝕚𝕫𝕖 𝕠𝕥𝕣𝕠 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 𝕕𝕚𝕤𝕡𝕠𝕟𝕚𝕓𝕝𝕖: **/rv**")
 		task[username]=False
@@ -1985,14 +2004,14 @@ async def upload_moodle(file,msg,username):
 			filesize = Path(file).stat().st_size
 			print(21)
 			proxy = USER['proxy']
-			#headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:109.0) Gecko/20100101 Firefox/109.0'}
 		#login
 			msg = await msg.edit("💫 **Preparando subida...**")		
-			"""if proxy != False:
+			if proxy != False:
 				try:
 					connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
 				except:
-					if USER[username]['proxy'] == False:
+					proxy = USER[username]['proxy']
+					if proxy == False:
 						await msg.edit("Error a la hora de conectar con el proxy!!!")
 						return
 					else:
@@ -2002,9 +2021,8 @@ async def upload_moodle(file,msg,username):
 							await msg.edit("Error a la hora de conectar con tu proxy privado!!!")
 							return
 			else:
-					connector = aiohttp.TCPConnector()"""
-			
-			connector = aiohttp.TCPConnector()					
+					connector = aiohttp.TCPConnector()			
+			#connector = aiohttp.TCPConnector()					
 			if filesize-1048>zipssize:
 					parts = math.ceil(filesize / zipssize)
 					await msg.edit(f"┏━━━━• **❅Preparando❅** •━━━━┓\n🧩 𝕋𝕠𝕥𝕒𝕝: **{parts} partes** a 丂凵乃丨尺\n┗━━━━•**❅🔩{USER[username]['zips']}MiB🔩❅**•━━━━┛")
@@ -2038,7 +2056,8 @@ async def upload_moodle(file,msg,username):
 							for file in files:
 								numero+=1
 								login = await client.login()
-								if not login:
+								if login:pass
+								else:
 									await msg.edit("Error a la hora del inicio de sesion!!!")
 									return
 								r = await client.upload_file_draft(file,read_callback=lambda current,total,start: uploadfile_progres(current,total,start,file.split("/")[-1],msg,parts,numero))						
@@ -2070,12 +2089,13 @@ async def upload_moodle(file,msg,username):
 							else:
 								pin = await bot.send_document(username,txtname,caption=f"**🚀 𝕾𝖚𝖇𝖎𝖉𝖆 𝕰𝖃𝕴𝕿𝕺𝕾𝕬 🚀**\n **ℙ𝕠𝕨𝕖𝕣 𝕓𝕪 @maxUpload**", thumb='thumb.jpg')
 								task[username]=False
-								await bot.pin_chat_message(username,pin.id, disable_notification=True,both_sides=True)
-							os.unlink(txtname)
-							if token != False:
+								await bot.pin_chat_message(username,pin.id, disable_notification=True,both_sides=True)		
+							if token == False:
 									await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n𝕌𝕤𝕖𝕣: `{user}`\nℙ𝕒𝕤𝕤: `{passw}`\nℍ𝕠𝕤𝕥: {host}login #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
 							else:
 								await bot.send_document(CHANNEL,txtname,caption=f"**ㄒ乂ㄒ ⓢⓤⓑⓘⓓⓞ 🅧 @{username}**\n**⟨[**`{file.split('/')[-1].split('.7z')[0]}`**]⟩**\n#{username} #txt\n💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️",thumb = 'thumb.jpg')
+							os.unlink(txtname)
+							task[username]=False
 								
 								
 			##FINISH, SUBIDA DE BASTANTES PARTS
