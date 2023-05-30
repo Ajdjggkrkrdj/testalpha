@@ -228,7 +228,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=APYE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://apye.esceg.cu/index.php/apye/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await send_config()
 	#APYE CALLBACK.data
 	elif callback_query.data == "1":
@@ -325,7 +325,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=REGU)
 		await callback_query.answer()
 		USER[username]['host'] = "https://revistas.unica.cu/index.php/regu/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await send_config()
 	#REGU CALLBACK.data
 	elif callback_query.data == "r1":
@@ -385,7 +385,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=UCIE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://revistas.unica.cu/index.php/uciencia/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await send_config()
 	#UCIEN CALLBACK.data
 	elif callback_query.data == "r01":
@@ -442,7 +442,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=TECE)
 		await callback_query.answer()
 		USER[username]['host'] = "https://tecedu.uho.edu.cu/index.php/tecedu/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await send_config()
 	#TECE CALLBACK.data
 	elif callback_query.data == "t1":
@@ -500,7 +500,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 			return
 		USER[username]["zips"] = 20
 		USER[username]['host'] = "https://ediciones.uo.edu.cu/index.php/e1/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=EDIC)
 		await callback_query.answer()
 		await send_config()
@@ -548,7 +548,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 	elif callback_query.data == "CINFO":
 		USER[username]["zips"] = 10
 		USER[username]['host'] = "http://cinfo.idict.cu/index.php/cinfo/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=CINFO)
 		await send_config()
 		await callback_query.answer()
@@ -570,6 +570,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la cinfo 2 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "003":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
 		id = USER['CINFO']['003']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientetres'
@@ -578,6 +581,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la cinfo 3 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "004":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
 		id = USER['CINFO']['004']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientecuatro'
@@ -586,6 +592,9 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 		await msg.edit("✓ Ok ahora subire a la cinfo 4 ✓")
 		await callback_query.answer()
 	elif callback_query.data == "005":
+		if username not in USER['VIP']:
+			await callback_query.answer("Cliente solo para premiums ‼️")
+			return
 		id = USER['CINFO']['005']
 		USER[username]['up_id'] = id
 		USER[username]['user'] = 'clientecinco'
@@ -601,7 +610,7 @@ async def callback_query(client:Client, callback_query:CallbackQuery):
 			return
 		USER[username]["zips"] = 50
 		USER[username]['host'] = "https://santiago.uo.edu.cu/index.php/stgo/"
-		USER[username]['modo'] = 'n'
+		USER[username]['mode'] = 'n'
 		await msg.edit("☁️ 𝕊𝕖𝕝𝕖𝕔𝕔𝕚𝕠𝕟𝕖 𝕖𝕝 𝕔𝕝𝕚𝕖𝕟𝕥𝕖 🚀",reply_markup=STGO)
 		await send_config()
 		await callback_query.answer()
@@ -679,7 +688,7 @@ async def aula_gtm(client:Client, message:Message):
 		if user not in USER:
 			return
 		else:pass
-		USER[user]['host'] = 'https://aulauvs.gtm.sld.cu/'
+		USER[user]['host'] = 'https://aulauvs.gtm.sld.cu'
 		USER[user]['zips'] = 7
 		USER[user]['mode'] = 'm'
 		USER[user]['token'] = USER['gtm']
@@ -694,7 +703,7 @@ async def token_global(client:Client, message:Message):
 		else:pass
 		msg = message.text.split(" ")
 		if msg[1] not in USER:
-			await message.reply("Error las nubes son:\ngtm\nEjemplo de uso: `/token gtm TOKEN`")
+			await message.reply("__Error, las nubes son:__\n**• gtm\n• vcl\n• ucc\n•ltu\n• uvs\n• uclv\n•uni**\n lEjemplo de uso: `/token gtm TOKEN`")
 			return
 		else:pass
 		USER[msg[1]] = msg[2]
@@ -1598,7 +1607,54 @@ async def down_link(client: Client, message: Message):
             except Exception as ex:
              	task[username] = False
              	await msg.edit(f"ERROR\n{ex}")
-             	
+ 
+@bot.on_message(filters.regex("/deleteFile") & filters.private)
+async def delRev(client: Client, message: Message):
+	username = message.from_user.username
+	msg = await message.reply("Tratando de borrar...")
+	await deleteFile(username,msg)
+	
+###	
+async def deleteFile(username,msg):
+    host = 'https://revistas.unica.cu/index.php/regu/'
+    connector = aiohttp.TCPConnector()
+    async with aiohttp.ClientSession(connector=connector) as session:
+    	async with session.get(host + "login") as response:
+    		html = await response.text()
+    	soup = BeautifulSoup(html, "html.parser")
+    	csrfToken = soup.find("input",attrs={"name":"csrfToken"})['value']
+    	url_post = host + 'login/signIn'
+    	payload = {}
+    	payload['csrfToken'] = csrfToken
+    	payload['source'] = ''
+    	payload['username'] = 'clienteuno'
+    	payload['password'] = 'C1i3nte01*'
+    	payload['remember'] = '1'
+    	async with session.post(url_post, data=payload) as e:
+    		print(222)
+    	url = host + 'user/profile'
+    	async with session.get(url) as resp:
+    		try:
+    			u = resp.url
+    		except:
+    			u = resp.url()
+    		if u==host+'login/signIn':
+    			await msg.edit("❌ **ERROR** ❌\nℂ𝕣𝕖𝕕𝕖𝕟𝕔𝕚𝕒𝕝𝕖𝕤 𝕚𝕟𝕔𝕠𝕣𝕣𝕖𝕔𝕥𝕒𝕤, 𝕡𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕥𝕒𝕞𝕓𝕚𝕖́𝕟 𝕒𝕝𝕘𝕦𝕟𝕒 𝕔𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟...𝕠 𝕝𝕒 𝕟𝕦𝕓𝕖 𝕖𝕤𝕥𝕒́ 𝕔𝕒𝕚́𝕕𝕒/𝕓𝕒𝕟𝕟𝕖𝕒𝕕𝕒. 😐")
+    			task[username]=False
+    		else:
+    			url = f"{host}/api/v1/submissions/3368/files/136489?stageId=1"
+    			headers = {
+        'x-csrf-token': csrfToken,
+        'x-http-method-override': 'DELETE'
+    }
+    			async with session.post(url, headers=headers) as response:
+    			     if response.status == 200:
+    			     	return msg.edit("✓ Eureca ✓")
+    			     	task[username] = False
+    			     else:
+    			     	return msg.edit("Nou...")
+    			     	task[username] = False  	
+             	            	            	
 #Comamdo /up subida
 @bot.on_message(filters.regex("/up") & filters.private)
 async def up(client: Client, message: Message):
@@ -1735,8 +1791,6 @@ def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 
 #Subida a la revistas :)
 async def up_revistas_api(file,usid,msg,username):
-	global contador
-	contador = 0
 	try:
 		host=USER[username]["host"]
 		user=USER[username]['user']
@@ -1756,7 +1810,8 @@ async def up_revistas_api(file,usid,msg,username):
 			try:
 				connector = aiohttp_socks.ProxyConnector.from_url(f"{proxy}")
 			except Exception as ex:
-				await msg.edit(f"**{ex}**")
+				await msg.edit(f"Error al conectae con el proxy:\n**{ex}**")
+				return
 		else:
 			connector = aiohttp.TCPConnector()
 		async with aiohttp.ClientSession(connector=connector) as session:
