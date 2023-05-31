@@ -1618,13 +1618,23 @@ async def down_link(client: Client, message: Message):
             except Exception as ex:
              	task[username] = False
              	await msg.edit(f"ERROR\n{ex}")
- 
+
+#BORRADO DE REV 
 @bot.on_message(filters.command("delete", prefixes="/") & filters.private)
 async def delete_rev(client: Client, message: Message):
 	username = message.from_user.username
-	msg = await message.reply("Tratando de borrar...")
-	smsg = message.text.split(" ")
-	await deleteFile(smsg[1], smsg[2], smsg[3],smsg[4], smsg[5], msg, username)
+	if username != "dev_sorcerer":
+	   return
+	else:pass
+	#username = message.from_user.username
+	try:
+		msg = await message.reply("Tratando de borrar...")
+		smsg = message.text.split(" ")
+		await deleteFile(smsg[1], smsg[2], smsg[3],smsg[4], smsg[5], msg, username)
+	except Exception as ex:
+		task[username] = False
+		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
+		await bot.send_message(username,f"{ex}") 
 	
 ###	
 async def deleteFile(host, fileID, id, user, passw, msg, username):
