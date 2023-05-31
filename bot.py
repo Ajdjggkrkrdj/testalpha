@@ -1636,45 +1636,7 @@ async def delete_rev(client: Client, message: Message):
 		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
 		await bot.send_message(username,f"{ex}") 
 	
-###	
-async def deleteFile(host, fileID, id, user, passw, msg, username):
 
-    connector = aiohttp.TCPConnector()
-    async with aiohttp.ClientSession(connector=connector) as session:
-    	async with session.get(host + "login") as response:
-    		html = await response.text()
-    	soup = BeautifulSoup(html, "html.parser")
-    	csrfToken = soup.find("input",attrs={"name":"csrfToken"})['value']
-    	url_post = host + 'login/signIn'
-    	payload = {}
-    	payload['csrfToken'] = csrfToken
-    	payload['source'] = ''
-    	payload['username'] = user
-    	payload['password'] = passw
-    	payload['remember'] = '1'
-    	async with session.post(url_post, data=payload) as e:
-    		print(222)
-    	url = host + 'user/profile'
-    	async with session.get(url) as resp:
-    		try:
-    			u = resp.url
-    		except:
-    			u = resp.url()
-    		if u==host+'login/signIn':
-    			await msg.edit("❌ **ERROR** ❌\nℂ𝕣𝕖𝕕𝕖𝕟𝕔𝕚𝕒𝕝𝕖𝕤 𝕚𝕟𝕔𝕠𝕣𝕣𝕖𝕔𝕥𝕒𝕤, 𝕡𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕥𝕒𝕞𝕓𝕚𝕖́𝕟 𝕒𝕝𝕘𝕦𝕟𝕒 𝕔𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟...𝕠 𝕝𝕒 𝕟𝕦𝕓𝕖 𝕖𝕤𝕥𝕒́ 𝕔𝕒𝕚́𝕕𝕒/𝕓𝕒𝕟𝕟𝕖𝕒𝕕𝕒. 😐")
-    			task[username]=False
-    			return
-    		else:
-    			url = f"{host}/api/v1/submissions/{id}/files/{fileID}?stageId=1"
-    			headers = {
-        'x-csrf-token': csrfToken,
-        'x-http-method-override': 'DELETE'
-    }
-    			async with session.post(url, headers=headers) as response:
-    			     if response.status == 200:
-    			     	return await msg.edit("✓ Eureca ✓")
-    			     else:
-    			     	return await msg.edit("Nou...")
              	            	            	
 #Comamdo /up subida
 @bot.on_message(filters.regex("/up") & filters.private)
@@ -1719,7 +1681,46 @@ async def up(client: Client, message: Message):
 		task[username] = False
 		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
 		await bot.send_message(username,f"{ex}")
-		
+
+###	
+async def deleteFile(host, fileID, id, user, passw, msg, username):
+
+    connector = aiohttp.TCPConnector()
+    async with aiohttp.ClientSession(connector=connector) as session:
+    	async with session.get(host + "login") as response:
+    		html = await response.text()
+    	soup = BeautifulSoup(html, "html.parser")
+    	csrfToken = soup.find("input",attrs={"name":"csrfToken"})['value']
+    	url_post = host + 'login/signIn'
+    	payload = {}
+    	payload['csrfToken'] = csrfToken
+    	payload['source'] = ''
+    	payload['username'] = user
+    	payload['password'] = passw
+    	payload['remember'] = '1'
+    	async with session.post(url_post, data=payload) as e:
+    		print(222)
+    	url = host + 'user/profile'
+    	async with session.get(url) as resp:
+    		try:
+    			u = resp.url
+    		except:
+    			u = resp.url()
+    		if u==host+'login/signIn':
+    			await msg.edit("❌ **ERROR** ❌\nℂ𝕣𝕖𝕕𝕖𝕟𝕔𝕚𝕒𝕝𝕖𝕤 𝕚𝕟𝕔𝕠𝕣𝕣𝕖𝕔𝕥𝕒𝕤, 𝕡𝕦𝕖𝕕𝕖 𝕤𝕖𝕣 𝕥𝕒𝕞𝕓𝕚𝕖́𝕟 𝕒𝕝𝕘𝕦𝕟𝕒 𝕔𝕠𝕟𝕗𝕚𝕘𝕦𝕣𝕒𝕔𝕚𝕠́𝕟...𝕠 𝕝𝕒 𝕟𝕦𝕓𝕖 𝕖𝕤𝕥𝕒́ 𝕔𝕒𝕚́𝕕𝕒/𝕓𝕒𝕟𝕟𝕖𝕒𝕕𝕒. 😐")
+    			task[username]=False
+    			return
+    		else:
+    			url = f"{host}/api/v1/submissions/{id}/files/{fileID}?stageId=1"
+    			headers = {
+        'x-csrf-token': csrfToken,
+        'x-http-method-override': 'DELETE'
+    }
+    			async with session.post(url, headers=headers) as response:
+    			     if response.status == 200:
+    			     	return await msg.edit("✓ Eureca ✓")
+    			     else:
+    			     	return await msg.edit("Nou...")				
 ##MENSAGED DE PROGRESO ⬆⬇
 def update_progress_up(inte,max):
 	percentage = inte / max
@@ -1785,9 +1786,8 @@ async def progress_down_tg(chunk,total,filename,start,message):
 
 #Progreso de subida a la nube bar
 def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
-
-	clock_emojis = itertools.cycle(['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛'])
-	
+	#clock_emojis = itertools.cycle(['🕐', '🕑', '🕒', '🕓', '🕔', '🕕', '🕖', '🕗', '🕘', '🕙', '🕚', '🕛'])
+		
 	now = time()
 	diff = now - start
 	mbs = chunk / diff
@@ -1808,8 +1808,8 @@ def uploadfile_progres(chunk,filesize,start,filename,message,parts,numero):
 	try:
 		msg+=update_progress_up(chunk,filesize)+ " " + sizeof_fmt(mbs)+"/s\n\n"
 	except:pass
-	emojis = next(clock_emojis)
-	msg+= f"🎒: `{filename}`\n**{emojis}: {time_str}  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
+	#emojis = next(clock_emojis)
+	msg+= f"🎒: `{filename}`\n**🕐: {time_str}  |  🆙: {sizeof_fmt(chunk)}/{sizeof_fmt(filesize)}**"
 	global seg
 	if seg != localtime().tm_sec:
 		message.edit(msg,reply_markup=cancelar)
