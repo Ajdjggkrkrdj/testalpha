@@ -703,7 +703,7 @@ async def token_global(client:Client, message:Message):
 		else:pass
 		msg = message.text.split(" ")
 		if msg[1] not in USER:
-			await message.reply("__Error, las nubes son:__\n**• gtm\n• vcl\n• ucc\n•ltu\n• uvs\n• uclv\n•uni**\n lEjemplo de uso: `/token gtm TOKEN`")
+			await message.reply("__Error, las nubes son:__\n\n**• gtm\n• vcl\n• ucc\n• ltu\n• uvs\n• uclv\n• uni**\n⟨lEjemplo de uso: `/token gtm TOKEN`|⟩")
 			return
 		else:pass
 		USER[msg[1]] = msg[2]
@@ -725,6 +725,7 @@ async def status(client:Client, message:Message):
 				if user == 'Comillas_San':
 					await message.reply("Ok gracias onee-chan no hace falta que me apagues :)")
 					return
+				else:pass
 				USER['modo']='on'
 				await message.reply("**✓ Status: ON ✓**")
 				await send_config()
@@ -1619,7 +1620,7 @@ async def down_link(client: Client, message: Message):
              	await msg.edit(f"ERROR\n{ex}")
  
 @bot.on_message(filters.command("delete", prefixes="/") & filters.private)
-async def delRev(client: Client, message: Message):
+async def delete_rev(client: Client, message: Message):
 	username = message.from_user.username
 	msg = await message.reply("Tratando de borrar...")
 	smsg = message.text.split(" ")
@@ -1707,7 +1708,7 @@ async def up(client: Client, message: Message):
 	except Exception as ex:
 		task[username] = False
 		await msg.edit("⚠️ __Imposible la carga del archivo por algun motivo__ ‼️")
-		#await bot.send_message(username,f"{ex}")
+		await bot.send_message(username,f"{ex}")
 		
 ##MENSAGED DE PROGRESO ⬆⬇
 def update_progress_up(inte,max):
@@ -1913,7 +1914,7 @@ async def up_revistas_api(file,usid,msg,username):
 											except:
 												upsize = Path(filenow).stat().st_size
 											USER[username]['S']+=upsize
-											unlink(file)
+											os.unlink(file)
 											await send_config()
 										else:
 											await bot.send_message(usid,f"👾**F:** `{file.split('/')[-1]}`")
@@ -1925,6 +1926,7 @@ async def up_revistas_api(file,usid,msg,username):
 							else:
 								await msg.edit("🌩️ **₣Ɨ₦₳ⱠƗƵ₳ƉØ** ⤵️")							
 							await bot.send_message(usid,f"💻 **🅂🅄🄱🄸🄳🄾 {subido} / {parts}** ☁️")
+							task[username] = False
 							if int(subido)>0:
 								txtname = file.split('.7z')[0].replace(' ','_')+'.txt'	
 								with open(txtname,"w") as t:
